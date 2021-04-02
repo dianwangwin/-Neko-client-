@@ -16,14 +16,14 @@ import org.apache.logging.log4j.Logger;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 
-@Mod(modid = "wurstplus", version = Wurstplus.WURSTPLUS_VERSION)
+@Mod(modid = "nekoclient", version = Wurstplus.WURSTPLUS_VERSION)
 public class Wurstplus {
 
 	@Mod.Instance
 	private static Wurstplus MASTER;
 
-	public static final String WURSTPLUS_NAME = "Wurst+ 2";
-	public static final String WURSTPLUS_VERSION = "1.0";
+	public static final String WURSTPLUS_NAME = "Neko Client";
+	public static final String WURSTPLUS_VERSION = "0.1";
 	public static final String WURSTPLUS_SIGN = " ";
 
 	public static final int WURSTPLUS_KEY_GUI = Keyboard.KEY_RSHIFT;
