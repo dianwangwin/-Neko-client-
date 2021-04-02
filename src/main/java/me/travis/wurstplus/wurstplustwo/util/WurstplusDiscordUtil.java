@@ -25,7 +25,7 @@
 //
 //    public static void start() {
 //
-//        String applicationId = "705741263470723093";
+//        String applicationId = "827539854569111603";
 //        String steamId = "";
 //
 //        DiscordRichPresence presence = new DiscordRichPresence();
