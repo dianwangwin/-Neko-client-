@@ -1,5 +1,5 @@
 
 Head dev: Profkambing (barely knows java)
-Retarded dev: Vaimok (whats java)
-Another retarded dev: rTe (does nothing)
+Retarded dev: Vaimok (chad pvper)
+Another retarded dev: rTe (who?)
 
