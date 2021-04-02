@@ -25,7 +25,7 @@ import static me.travis.wurstplus.Wurstplus.send_minecraft_log;
 public class WurstplusConfigManager {
 
     // FOLDERS
-    private final String MAIN_FOLDER = "WURSTPLUSTWO/";
+    private final String MAIN_FOLDER = "NekoClient/";
     private final String CONFIGS_FOLDER = MAIN_FOLDER + "configs/";
     private String ACTIVE_CONFIG_FOLDER = CONFIGS_FOLDER + "default/";
 
