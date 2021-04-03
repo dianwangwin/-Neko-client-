@@ -6,9 +6,9 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import me.travis.wurstplus.wurstplustwo.hacks.WurstplusCategory;
 import me.travis.wurstplus.wurstplustwo.hacks.WurstplusHack;
 
-public class WurstplusChatSuffix extends WurstplusHack {
+public final class WurstplusChatSuffix extends WurstplusHack {
     
-    public WurstplusTotempop() {
+    public WurstplusChatSuffix() {
 	        super(WurstplusCategory.WURSTPLUS_CHAT);
       
                 this.name = "NekoSuffix";
