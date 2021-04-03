@@ -7,7 +7,7 @@ import net.minecraft.client.Minecraft;
 
 public class DiscordUtils
 {
-    private static final String ClientId = "735284224646578226";
+    private static final String ClientId = "827716700660826113";
     private static final Minecraft mc;
     private static final DiscordRPC rpc;
     public static DiscordRichPresence presence;
@@ -17,11 +17,11 @@ public class DiscordUtils
     public static void init() {
         final DiscordEventHandlers handlers = new DiscordEventHandlers();
         handlers.disconnected = ((var1, var2) -> System.out.println("Discord RPC disconnected, var1: " + String.valueOf(var1) + ", var2: " + var2));
-        DiscordUtils.rpc.Discord_Initialize("735284224646578226", handlers, true, "");
+        DiscordUtils.rpc.Discord_Initialize("827716700660826113", handlers, true, "");
         DiscordUtils.presence.startTimestamp = System.currentTimeMillis() / 1000L;
         DiscordUtils.presence.details = "IGN: " + mc.player.getName();
         DiscordUtils.presence.state = "Main Menu";
-        DiscordUtils.presence.largeImageKey = "logo";
+        DiscordUtils.presence.largeImageKey = "neko";
         DiscordUtils.presence.largeImageText = Wurstplus.WURSTPLUS_VERSION;
         DiscordUtils.rpc.Discord_UpdatePresence(DiscordUtils.presence);
         new Thread(() -> {
@@ -31,7 +31,7 @@ public class DiscordUtils
                 	DiscordUtils.details = "IGN: " + mc.player.getName();
                 	DiscordUtils.state = "";
                     if (DiscordUtils.mc.isIntegratedServerRunning()) {
-                    	DiscordUtils.state = "Playing on Singleplayer";
+                    	DiscordUtils.state = "Chilling on Singleplayer";
                     }
                     else if (DiscordUtils.mc.getCurrentServerData() != null) {
                         if (!DiscordUtils.mc.getCurrentServerData().serverIP.equals("")) {
