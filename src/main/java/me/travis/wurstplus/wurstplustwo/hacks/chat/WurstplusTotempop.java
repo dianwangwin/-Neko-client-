@@ -21,8 +21,8 @@ public class WurstplusTotempop extends WurstplusHack {
 		super(WurstplusCategory.WURSTPLUS_CHAT);
 
 		this.name        = "Totem Pop Counter";
-		this.tag         = "TotemPopCounter";
-		this.description = "dude idk wurst+ is just outdated";
+		this.tag         = "NekoPopCounter";
+		this.description = "dude idk nekohax is just too op";
     }
 
     public static final HashMap<String, Integer> totem_pop_counter = new HashMap<String, Integer>();
