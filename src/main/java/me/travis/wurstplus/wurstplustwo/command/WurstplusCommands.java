@@ -12,7 +12,7 @@ public class WurstplusCommands {
 	public static ArrayList<WurstplusCommand> command_list = new ArrayList<>();
 	static HashMap<java.lang.String, WurstplusCommand> list_command  = new HashMap<>();
 
-	public static final TurokString prefix = new TurokString("Prefix", "Prefix", ".");
+	public static final TurokString prefix = new TurokString("Prefix", "Prefix", "-");
 
 	public final Style style;
 
