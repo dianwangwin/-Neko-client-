@@ -5,7 +5,7 @@ import club.minnced.discord.rpc.DiscordRPC;
 import club.minnced.discord.rpc.DiscordRichPresence;
 import net.minecraft.client.Minecraft;
 
-public class Discord {
+public class DiscordUtils {
 
     private static String discordID = "827716700660826113";
     private static DiscordRichPresence discordRichPresence = new DiscordRichPresence();
