@@ -6,9 +6,14 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import me.travis.wurstplus.wurstplustwo.hacks.WurstplusCategory;
 import me.travis.wurstplus.wurstplustwo.hacks.WurstplusHack;
 
-public class ChatSuffix extends Module {
-  public ChatSuffix() {
-    super("ChatSuffix", Module.Category.PLAYER);
+public class WurstplusChatSuffix extends WurstplusHack {
+    
+    public WurstplusTotempop() {
+								super(WurstplusCategory.WURSTPLUS_CHAT);
+      
+    this.name        = "NekoSuffix";
+		this.tag         = "NekoSuffix";
+		this.description = "nekohax strong hax";
   }
   
   @SubscribeEvent
