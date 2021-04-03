@@ -38,7 +38,7 @@ public class WurstplusModuleManager {
 		add_hack(new WurstplusClickHUD());
 
 		// Chat.
-		add_hack(new ChatSuffix());
+		add_hack(new WurstplusChatSuffix());
 		add_hack(new WurstplusVisualRange());
 		add_hack(new WurstplusTotempop());
 		add_hack(new WurstplusClearChat());
