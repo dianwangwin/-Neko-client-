@@ -4,6 +4,6 @@
 
 - Head dev: Profkambing (barely knows java)
 - Retarded dev: Vaimok (chad pvper)
-- Another retarded dev: rTe (does nothing)
+- Another retarded dev: rTe (renamed phobos)
 - GUI maker: Momin (cookie client dev!!!)
 - less retarded dev: Trambled (ozark client dev)
