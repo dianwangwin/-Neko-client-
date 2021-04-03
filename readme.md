@@ -6,3 +6,4 @@
 - Retarded dev: Vaimok (chad pvper)
 - Another retarded dev: rTe (does nothing)
 - GUI maker: Momin (cookie client dev!!!)
+- less retarded dev: Trambled (ozark client dev)
