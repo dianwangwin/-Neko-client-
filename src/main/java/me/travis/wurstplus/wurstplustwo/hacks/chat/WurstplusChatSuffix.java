@@ -33,19 +33,15 @@ public class WurstplusChatSuffix extends WurstplusHack {
 	StringBuilder suffix;
 
 	String[] random_client_name = {
-		"chad",
-		"tabott",
-		"travis",
-		"unco",
-		"kiwi",
-		"xdolf",
-		"eightsixfour",
-		"biggus",
-		"naughty",
-		"jumpy",
-		"chae",
-		"wurst",
-		"buttfuhk"
+		"trambled",
+		"vaimok",
+		"niggerkambing",
+		"rte",
+		"momin",
+		"snine19",
+		"goldenpancakes",
+		"cober",
+		"schmoke"
 	};
 
 	String[] random_client_finish = {
@@ -91,7 +87,7 @@ public class WurstplusChatSuffix extends WurstplusHack {
 		if (message.startsWith("(")  && ignore_prefix) accept_suffix = false;
 		if (message.startsWith(")")  && ignore_prefix) accept_suffix = false;
 
-		// Compare the values type.
+		// Compare the values 
 		if (type.in("Default")) {
 			suffix_default = true;
 			suffix_random  = false;
@@ -106,7 +102,7 @@ public class WurstplusChatSuffix extends WurstplusHack {
 		if (accept_suffix) {
 			if (suffix_default) {
 				// Just default.
-				message += Wurstplus.WURSTPLUS_SIGN + convert_base("wurstplus two");
+				message += Wurstplus.WURSTPLUS_SIGN + convert_base("nekohax");
 			}
 
 			if (suffix_random) {
