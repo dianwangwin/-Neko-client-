@@ -12,13 +12,14 @@ public class RichPresence extends WurstplusHack {
         this.name = "Rich Presence";
         this.tag = "RichPresence";
         this.description = "shows discord rpc";
+
+    }
+	
+	public void onEnable() {
+	    Discord.startRPC();
 	}
-    @Override
-    public void enable() {
-        DiscordUtils.init();
-    }
-    @Override
-    public void disable() {
-    	DiscordUtils.shutdown();
-    }
-}
+	
+	public void onDisable() {
+	    Discord.stopRPC();
+		}
+	}
