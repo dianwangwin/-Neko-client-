@@ -9,9 +9,9 @@ import me.travis.wurstplus.wurstplustwo.hacks.WurstplusHack;
 public class WurstplusChatSuffix extends WurstplusHack {
     
     public WurstplusTotempop() {
-								super(WurstplusCategory.WURSTPLUS_CHAT);
+	        super(WurstplusCategory.WURSTPLUS_CHAT);
       
-    this.name        = "NekoSuffix";
+                this.name = "NekoSuffix";
 		this.tag         = "NekoSuffix";
 		this.description = "nekohax strong hax";
   }
