@@ -20,22 +20,24 @@ public class WurstplusMessageUtil {
 	public static ChatFormatting g = ChatFormatting.GOLD;
 	public static ChatFormatting b = ChatFormatting.BLUE;
 	public static ChatFormatting a = ChatFormatting.DARK_AQUA;
+	public static ChatFormatting l = ChatFormatting.LIGHT_PURPLE;
 	public static ChatFormatting r = ChatFormatting.RESET;
+	public static ChatFormatting d = ChatFormatting.DARK_RED;
 
-	public static String opener = g + Wurstplus.WURSTPLUS_NAME + ChatFormatting.GRAY + " > " + r;
+	public static String opener = l + Wurstplus.WURSTPLUS_NAME + ChatFormatting.GRAY + " > " + r;
 
 	public static void toggle_message(WurstplusHack module) {
 		if (module.is_active()) {
 			if (module.get_tag().equals("AutoCrystal")) {
-				client_message_simple(opener + "Nekomode" + ChatFormatting.LIGHT_PURPLE + " activated");
+				client_message_simple(opener + "Nekomode" + ChatFormatting.GREEN + " activated");
 			} else {
-				client_message_simple(opener + r + module.get_name() + ChatFormatting.LIGHT_PURPLE + " Activated");
+				client_message_simple(opener + r + module.get_name() + ChatFormatting.GREEN + " Activated");
 			}			
 		} else {
 			if (module.get_tag().equals("AutoCrystal")) {
-				client_message_simple(opener + "Nekomode" + ChatFormatting.DARK_AQUA + " deactivated ");
+				client_message_simple(opener + "Nekomode" + d + " deactivated ");
 			} else {
-				client_message_simple(opener + r + module.get_name() + ChatFormatting.DARK_AQUA + " deactivated");
+				client_message_simple(opener + r + module.get_name() + d + " deactivated");
 			}
 		}
 	}
@@ -54,15 +56,15 @@ public class WurstplusMessageUtil {
 	}
 
 	public static void send_client_message_simple(String message) {
-		client_message(ChatFormatting.GOLD + Wurstplus.WURSTPLUS_NAME + " " + r + message);
+		client_message(ChatFormatting.LIGHT_PURPLE + Wurstplus.WURSTPLUS_NAME + " " + r + message);
 	}
 
 	public static void send_client_message(String message) {
-		client_message(ChatFormatting.GOLD + Wurstplus.WURSTPLUS_NAME + " " + r + message);
+		client_message(ChatFormatting.LIGHT_PURPLE + Wurstplus.WURSTPLUS_NAME + " " + r + message);
 	}
 
 	public static void send_client_error_message(String message) {
-		client_message(ChatFormatting.RED + Wurstplus.WURSTPLUS_NAME + " " + r + message);
+		client_message(ChatFormatting.LIGHT_PURPLE + Wurstplus.WURSTPLUS_NAME + " " + r + message);
 	}
 
 	public static class ChatMessage extends TextComponentBase {
