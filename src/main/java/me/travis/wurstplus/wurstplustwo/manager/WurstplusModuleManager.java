@@ -89,7 +89,6 @@ public class WurstplusModuleManager {
 		add_hack(new WurstplusVoidESP());
 		add_hack(new WurstplusAntifog());
 		add_hack(new WurstplusNameTags());
-		add_hack(new WurstplusFuckedDetector());
 		add_hack(new WurstplusTracers());
 		add_hack(new WurstplusSkyColour());
 		add_hack(new WurstplusChams());
