@@ -42,7 +42,7 @@ public class WurstplusAutoCrystal extends WurstplusHack {
     public WurstplusAutoCrystal() {
         super(WurstplusCategory.WURSTPLUS_COMBAT);
 
-        this.name        = "Neko Aura";
+        this.name        = "Auto Neko";
         this.tag         = "AutoCrystal";
         this.description = "kills people (if ur good)";
     }
