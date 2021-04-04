@@ -45,6 +45,7 @@ public class WurstplusModuleManager {
 		add_hack(new WurstplusAutoEz());
 		add_hack(new WurstplusAntiRacist());
 		add_hack(new WurstplusAnnouncer());
+		add_hack(new AutoExcuse());
 
 		// Combat.
 		add_hack(new WurstplusCriticals());
