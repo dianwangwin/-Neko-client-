@@ -79,7 +79,7 @@ public class WurstplusModuleManager {
 		add_hack(new WurstplusStrafe());
 		add_hack(new WurstplusStep());
 		add_hack(new WurstplusSprint());
-		add_hack(new NoPush());
+		
 
 		// Render.
 		add_hack(new WurstplusHighlight());
