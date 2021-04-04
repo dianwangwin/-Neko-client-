@@ -54,7 +54,6 @@ public class WurstplusModuleManager {
 		add_hack(new WurstplusAutoCrystal());
 		add_hack(new WurstplusHoleFill());
 		add_hack(new WurstplusTrap());
-		add_hack(new WurstplusSocks());
 		add_hack(new WurstplusSelfTrap());
 		add_hack(new WurstplusAutoArmour());
 		add_hack(new WurstplusAuto32k());
