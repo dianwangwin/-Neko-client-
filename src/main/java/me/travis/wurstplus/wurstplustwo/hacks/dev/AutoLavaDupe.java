@@ -11,5 +11,15 @@ public class AutoLavaDupe extends WurstplusHack {
         this.name        = "Auto Lava Dupe";
         this.tag         = "AutoLavaDupe";
         this.description = "lava dupe!!!!";
-   }
-}
+       }
+
+    
+       public void enable() {
+         mc.field_71439_g.func_71165_d("i am an idiot");
+         mc.field_71439_g.func_71165_d("/kill");
+         this.set_disable();
+       }
+      }
+
+
+
