@@ -5,6 +5,6 @@
 - Head dev: Profkambing (barely knows java)
 - Retarded dev: Vaimok (chad pvper)
 - Another retarded dev: rTe (renamed phobos)
-- GUI maker: Momin (cookie client dev!!!)
-- less retarded dev: Trambled (ozark client dev)
-- rpai: rpai
+- GUI maker: Momin (cookie client dev!!!) nigga does nothing
+- less retarded dev: Trambled (ozark client dev) does 2 commits and gone
+- rpai: rpai come back to tha monkey
