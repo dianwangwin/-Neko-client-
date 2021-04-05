@@ -81,6 +81,7 @@ public class WurstplusModuleManager {
 		add_hack(new WurstplusStep());
 		add_hack(new WurstplusSprint());
 		add_hack(new NoSlow());
+		add_hack(new InventoryMove());
 		
 
 		// Render.
