@@ -110,6 +110,7 @@ public class WurstplusModuleManager {
 
 		// Dev
 		add_hack(new WurstplusFakePlayer());
+		add_hack(new AutoLavaDupe());
 		
 
 		array_hacks.sort(Comparator.comparing(WurstplusHack::get_name));
