@@ -101,7 +101,6 @@ public class WurstplusModuleManager {
 		add_hack(new WurstplusMiddleClickFriends());
 		add_hack(new WurstplusStopEXP());
 		add_hack(new WurstplusAutoReplenish());
-		add_hack(new WurstplusAutoNomadHut());
 		add_hack(new WurstplusFastUtil());
 		add_hack(new WurstplusSpeedmine());
 		add_hack(new RichPresence());
