@@ -28,18 +28,18 @@ public class DiscordUtils
             while (!Thread.currentThread().isInterrupted()) {
                 try {
                 	DiscordUtils.rpc.Discord_RunCallbacks();
-                	DiscordUtils.details = "IGN: " + mc.player.getName();
+                	DiscordUtils.details = "nya~ im playing with " + mc.player.getName();
                 	DiscordUtils.state = "";
                     if (DiscordUtils.mc.isIntegratedServerRunning()) {
                     	DiscordUtils.state = "Playing on Singleplayer";
                     }
                     else if (DiscordUtils.mc.getCurrentServerData() != null) {
                         if (!DiscordUtils.mc.getCurrentServerData().serverIP.equals("")) {
-                        	DiscordUtils.state = "Playing on " + DiscordUtils.mc.getCurrentServerData().serverIP;
+                        	DiscordUtils.state = "nekomode on " + DiscordUtils.mc.getCurrentServerData().serverIP;
                         }
                     }
                     else {
-                    	DiscordUtils.state = "Main Menu";
+                    	DiscordUtils.state = "watching lolipics :eyes:";
                     }
                     if (!DiscordUtils.details.equals(DiscordUtils.presence.details) || !DiscordUtils.state.equals(DiscordUtils.presence.state)) {
                     	DiscordUtils.presence.startTimestamp = System.currentTimeMillis() / 1000L;
