@@ -9,4 +9,4 @@
 - less retarded dev: Trambled (ozark client dev) does 2 commits and gone
 - rpai: rpai come back to tha monkey
 - neko: da gamesense profesional coder and pro-gramer
-- _KA1 xannax dev (adds hwid lock)
+- _KA1 xannax dev & vulcan ;) (adds hwid lock)
