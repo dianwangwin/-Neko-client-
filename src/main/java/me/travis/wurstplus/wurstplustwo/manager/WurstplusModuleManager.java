@@ -8,12 +8,10 @@ import me.travis.wurstplus.wurstplustwo.hacks.WurstplusClickHUD;
 import me.travis.wurstplus.wurstplustwo.hacks.WurstplusHack;
 import me.travis.wurstplus.wurstplustwo.hacks.chat.*;
 import me.travis.wurstplus.wurstplustwo.hacks.combat.*;
+import me.travis.wurstplus.wurstplustwo.hacks.movement.*;
 import me.travis.wurstplus.wurstplustwo.hacks.dev.WurstplusFakePlayer;
 import me.travis.wurstplus.wurstplustwo.hacks.exploit.*;
 import me.travis.wurstplus.wurstplustwo.hacks.misc.*;
-import me.travis.wurstplus.wurstplustwo.hacks.movement.WurstplusSprint;
-import me.travis.wurstplus.wurstplustwo.hacks.movement.WurstplusStep;
-import me.travis.wurstplus.wurstplustwo.hacks.movement.WurstplusStrafe;
 import me.travis.wurstplus.wurstplustwo.hacks.render.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -81,6 +79,7 @@ public class WurstplusModuleManager {
 		add_hack(new WurstplusStrafe());
 		add_hack(new WurstplusStep());
 		add_hack(new WurstplusSprint());
+		add_hack(new NoPush());
 		
 		// Render.
 		add_hack(new WurstplusHighlight());
