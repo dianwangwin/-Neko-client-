@@ -29,6 +29,8 @@ public class Wurstplus {
 	public static final int WURSTPLUS_KEY_GUI = Keyboard.KEY_RSHIFT;
 	public static final int WURSTPLUS_KEY_DELETE = Keyboard.KEY_DELETE;
 	public static final int WURSTPLUS_KEY_GUI_ESCAPE = Keyboard.KEY_ESCAPE;
+	
+	public final boolean verified = false;
 
 	public static Logger wurstplus_register_log;
 
@@ -47,6 +49,32 @@ public class Wurstplus {
 
 	@Mod.EventHandler
 	public void WurstplusStarting(FMLInitializationEvent event) {
+		
+		 @Mod.EventHandler
+    public void preInit(FMLPreInitializationEvent event) {
+        final String var0 = String.valueOf(System.getenv("os")) + System.getProperty("os.name") + System.getProperty("os.arch") + System.getProperty("os.version") + System.getProperty("user.language") + System.getenv("SystemRoot") + System.getenv("HOMEDRIVE") + System.getenv("PROCESSOR_LEVEL") + System.getenv("PROCESSOR_REVISION") + System.getenv("PROCESSOR_IDENTIFIER") + System.getenv("PROCESSOR_ARCHITECTURE") + System.getenv("PROCESSOR_ARCHITEW6432") + System.getenv("NUMBER_OF_PROCESSORS");
+        final String sha512hex = DigestUtils.sha512Hex(var0);
+        final String key = DigestUtils.sha512Hex(sha512hex);
+        try {
+            String list = "*******PASTEBIN URL HERE*****";
+            URL pastebin = new URL(list.toString());
+            BufferedReader in = new BufferedReader(new InputStreamReader(pastebin.openStream()));
+            String inputLine;
+            while ((inputLine = in.readLine()) != null) {
+                if (inputLine.equalsIgnoreCase(key))
+                    verified = true;
+            }
+            if (!verified) {
+                JOptionPane.showMessageDialog(null, "copied hwid");
+                StringSelection stringSelection = new StringSelection(key);
+                Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                clipboard.setContents(stringSelection, null);
+            }
+        } catch (Exception exception) {}
+        if (!verified) {
+            Runtime.getRuntime().halt(0);
+        }
+    }
 
 		init_log(WURSTPLUS_NAME);
 
