@@ -27,10 +27,10 @@ import net.minecraft.world.Explosion;
 public class WurstplusCrystalUtil {
    static final Minecraft mc = Minecraft.getMinecraft();
 
-   public static List possiblePlacePositions(float placeRange, boolean thirteen) {
+   public static List possiblePlacePositions(float placeRange, boolean thirteen, boolean specialEntityCheck) {
       NonNullList positions = NonNullList.create();
       positions.addAll((Collection)getSphere(getPlayerPos(mc.player), placeRange, (int)placeRange, false, true, 0).stream().filter((pos) -> {
-         return canPlaceCrystal(pos, thirteen);
+         return canPlaceCrystal(pos, thirteen, specialEntityCheck);
       }).collect(Collectors.toList()));
       return positions;
    }
@@ -60,7 +60,7 @@ public class WurstplusCrystalUtil {
       return circleblocks;
    }
 
-   public static boolean canPlaceCrystal(BlockPos blockPos, boolean thirteen) {
+   public static boolean canPlaceCrystal(BlockPos blockPos, boolean thirteen, boolean specialEntityCheck) {
       BlockPos boost = blockPos.add(0, 1, 0);
       BlockPos boost2 = blockPos.add(0, 2, 0);
       BlockPos final_boost = blockPos.add(0, 3, 0);
@@ -70,41 +70,43 @@ public class WurstplusCrystalUtil {
             return false;
          } else if (mc.world.getBlockState(boost).getBlock() != Blocks.AIR || mc.world.getBlockState(boost2).getBlock() != Blocks.AIR && !thirteen) {
             return false;
-         } else {
-            Iterator var5 = mc.world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(boost)).iterator();
+         } else if (specialEntityCheck) {
+            Iterator var6 = mc.world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(boost)).iterator();
 
             Object entity;
             do {
-               if (!var5.hasNext()) {
-                  var5 = mc.world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(boost2)).iterator();
+               if (!var6.hasNext()) {
+                  var6 = mc.world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(boost2)).iterator();
 
                   do {
-                     if (!var5.hasNext()) {
-                        var5 = mc.world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(final_boost)).iterator();
+                     if (!var6.hasNext()) {
+                        var6 = mc.world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(final_boost)).iterator();
 
                         do {
-                           if (!var5.hasNext()) {
+                           if (!var6.hasNext()) {
                               return true;
                            }
 
-                           entity = var5.next();
+                           entity = var6.next();
                         } while(!(entity instanceof EntityEnderCrystal));
 
                         return false;
                      }
 
-                     entity = var5.next();
+                     entity = var6.next();
                   } while(entity instanceof EntityEnderCrystal);
 
                   return false;
                }
 
-               entity = var5.next();
+               entity = var6.next();
             } while(entity instanceof EntityEnderCrystal);
 
             return false;
+         } else {
+            return mc.world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(boost)).isEmpty() && mc.world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(boost2)).isEmpty();
          }
-      } catch (Exception var7) {
+      } catch (Exception var8) {
          return false;
       }
    }
