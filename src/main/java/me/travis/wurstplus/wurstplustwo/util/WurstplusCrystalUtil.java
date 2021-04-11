@@ -1,168 +1,185 @@
 package me.travis.wurstplus.wurstplustwo.util;
 
-import net.minecraft.init.MobEffects;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.util.CombatRules;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.util.DamageSource;
-import net.minecraft.world.World;
-import net.minecraft.world.Explosion;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.block.Block;
-import java.util.Iterator;
-import net.minecraft.entity.item.EntityEnderCrystal;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.entity.Entity;
-import net.minecraft.init.Blocks;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.math.BlockPos;
+import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.item.EntityEnderCrystal;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.MobEffects;
+import net.minecraft.util.CombatRules;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.Explosion;
 
-public class WurstplusCrystalUtil
-{
-    static final Minecraft mc;
-    
-    public WurstplusCrystalUtil() {
-        super();
-    }
-    
-    public static List<BlockPos> possiblePlacePositions(final float n, final boolean b) {
-        final NonNullList create = NonNullList.create();
-        create.addAll(getSphere(getPlayerPos(WurstplusCrystalUtil.mc.player), n, (int)n, false, true, 0).stream().filter(blockPos -> canPlaceCrystal(blockPos, b)).collect((Collector<? super Object, ?, List<? super Object>>)Collectors.toList()));
-        return (List<BlockPos>)create;
-    }
-    
-    public static BlockPos getPlayerPos(final EntityPlayer entityPlayer) {
-        return new BlockPos(Math.floor(entityPlayer.posX), Math.floor(entityPlayer.posY), Math.floor(entityPlayer.posZ));
-    }
-    
-    public static List<BlockPos> getSphere(final BlockPos blockPos, final float n, final int n2, final boolean b, final boolean b2, final int n3) {
-        final ArrayList<BlockPos> list = new ArrayList<BlockPos>();
-        final int x = blockPos.getX();
-        final int y = blockPos.getY();
-        final int z = blockPos.getZ();
-        for (int n4 = x - (int)n; n4 <= x + n; ++n4) {
-            for (int n5 = z - (int)n; n5 <= z + n; ++n5) {
-                for (int n6 = b2 ? (y - (int)n) : y; n6 < (b2 ? (y + n) : ((float)(y + n2))); ++n6) {
-                    final double n7 = (x - n4) * (x - n4) + (z - n5) * (z - n5) + (b2 ? ((y - n6) * (y - n6)) : 0);
-                    if (n7 < n * n && (!b || n7 >= (n - 1.0f) * (n - 1.0f))) {
-                        list.add(new BlockPos(n4, n6 + n3, n5));
-                    }
-                }
+public class WurstplusCrystalUtil {
+   static final Minecraft mc = Minecraft.getMinecraft();
+
+   public static List possiblePlacePositions(float placeRange, boolean thirteen) {
+      NonNullList positions = NonNullList.create();
+      positions.addAll((Collection)getSphere(getPlayerPos(mc.player), placeRange, (int)placeRange, false, true, 0).stream().filter((pos) -> {
+         return canPlaceCrystal(pos, thirteen);
+      }).collect(Collectors.toList()));
+      return positions;
+   }
+
+   public static BlockPos getPlayerPos(EntityPlayer player) {
+      return new BlockPos(Math.floor(player.posX), Math.floor(player.posY), Math.floor(player.posZ));
+   }
+
+   public static List getSphere(BlockPos pos, float r, int h, boolean hollow, boolean sphere, int plus_y) {
+      List circleblocks = new ArrayList();
+      int cx = pos.getX();
+      int cy = pos.getY();
+      int cz = pos.getZ();
+
+      for(int x = cx - (int)r; (float)x <= (float)cx + r; ++x) {
+         for(int z = cz - (int)r; (float)z <= (float)cz + r; ++z) {
+            for(int y = sphere ? cy - (int)r : cy; (float)y < (sphere ? (float)cy + r : (float)(cy + h)); ++y) {
+               double dist = (double)((cx - x) * (cx - x) + (cz - z) * (cz - z) + (sphere ? (cy - y) * (cy - y) : 0));
+               if (dist < (double)(r * r) && (!hollow || dist >= (double)((r - 1.0F) * (r - 1.0F)))) {
+                  BlockPos l = new BlockPos(x, y + plus_y, z);
+                  circleblocks.add(l);
+               }
             }
-        }
-        return list;
-    }
-    
-    public static boolean canPlaceCrystal(final BlockPos blockPos, final boolean b) {
-        final BlockPos add = blockPos.add(0, 1, 0);
-        final BlockPos add2 = blockPos.add(0, 2, 0);
-        final BlockPos add3 = blockPos.add(0, 3, 0);
-        try {
-            if (WurstplusCrystalUtil.mc.world.getBlockState(blockPos).getBlock() != Blocks.BEDROCK && WurstplusCrystalUtil.mc.world.getBlockState(blockPos).getBlock() != Blocks.OBSIDIAN) {
-                return false;
-            }
-            if (WurstplusCrystalUtil.mc.world.getBlockState(add).getBlock() != Blocks.AIR || (WurstplusCrystalUtil.mc.world.getBlockState(add2).getBlock() != Blocks.AIR && !b)) {
-                return false;
-            }
-            final Iterator iterator = WurstplusCrystalUtil.mc.world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(add)).iterator();
-            while (iterator.hasNext()) {
-                if (!(iterator.next() instanceof EntityEnderCrystal)) {
-                    return false;
-                }
-            }
-            final Iterator iterator2 = WurstplusCrystalUtil.mc.world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(add2)).iterator();
-            while (iterator2.hasNext()) {
-                if (!(iterator2.next() instanceof EntityEnderCrystal)) {
-                    return false;
-                }
-            }
-            final Iterator iterator3 = WurstplusCrystalUtil.mc.world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(add3)).iterator();
-            while (iterator3.hasNext()) {
-                if (iterator3.next() instanceof EntityEnderCrystal) {
-                    return false;
-                }
-            }
-        }
-        catch (Exception ex) {
+         }
+      }
+
+      return circleblocks;
+   }
+
+   public static boolean canPlaceCrystal(BlockPos blockPos, boolean thirteen) {
+      BlockPos boost = blockPos.add(0, 1, 0);
+      BlockPos boost2 = blockPos.add(0, 2, 0);
+      BlockPos final_boost = blockPos.add(0, 3, 0);
+
+      try {
+         if (mc.world.getBlockState(blockPos).getBlock() != Blocks.BEDROCK && mc.world.getBlockState(blockPos).getBlock() != Blocks.OBSIDIAN) {
             return false;
-        }
-        return true;
-    }
-    
-    public static boolean canPlaceCrystal(final BlockPos blockPos) {
-        final Block block = WurstplusCrystalUtil.mc.world.getBlockState(blockPos).getBlock();
-        if (block == Blocks.OBSIDIAN || block == Blocks.BEDROCK) {
-            final Block block2 = WurstplusCrystalUtil.mc.world.getBlockState(blockPos.add(0, 1, 0)).getBlock();
-            final Block block3 = WurstplusCrystalUtil.mc.world.getBlockState(blockPos.add(0, 2, 0)).getBlock();
-            if (block2 == Blocks.AIR && block3 == Blocks.AIR && WurstplusCrystalUtil.mc.world.getEntitiesWithinAABBExcludingEntity(null, new AxisAlignedBB(blockPos.add(0, 1, 0))).isEmpty() && WurstplusCrystalUtil.mc.world.getEntitiesWithinAABBExcludingEntity(null, new AxisAlignedBB(blockPos.add(0, 2, 0))).isEmpty()) {
-                return true;
-            }
-        }
-        return false;
-    }
-    
-    public static float calculateDamage(final double n, final double n2, final double n3, final Entity entity) {
-        if (entity == WurstplusCrystalUtil.mc.player && WurstplusCrystalUtil.mc.player.capabilities.isCreativeMode) {
-            return 0.0f;
-        }
-        final double n4 = entity.getDistance(n, n2, n3) / 12.0;
-        final Vec3d vec3d = new Vec3d(n, n2, n3);
-        double n5 = 0.0;
-        try {
-            n5 = entity.world.getBlockDensity(vec3d, entity.getEntityBoundingBox());
-        }
-        catch (Exception ex) {}
-        final double n6 = (1.0 - n4) * n5;
-        final float n7 = (float)(int)((n6 * n6 + n6) / 2.0 * 7.0 * 12.0 + 1.0);
-        double n8 = 1.0;
-        if (entity instanceof EntityLivingBase) {
-            n8 = getBlastReduction((EntityLivingBase)entity, getDamageMultiplied(n7), new Explosion(WurstplusCrystalUtil.mc.world, null, n, n2, n3, 6.0f, false, true));
-        }
-        return (float)n8;
-    }
-    
-    public static float getBlastReduction(final EntityLivingBase entityLivingBase, final float n, final Explosion explosion) {
-        if (entityLivingBase instanceof EntityPlayer) {
-            final EntityPlayer entityPlayer = (EntityPlayer)entityLivingBase;
-            final DamageSource causeExplosionDamage = DamageSource.causeExplosionDamage(explosion);
-            final float damageAfterAbsorb = CombatRules.getDamageAfterAbsorb(n, (float)entityPlayer.getTotalArmorValue(), (float)entityPlayer.getEntityAttribute(SharedMonsterAttributes.ARMOR_TOUGHNESS).getAttributeValue());
-            int enchantmentModifierDamage = 0;
-            try {
-                enchantmentModifierDamage = EnchantmentHelper.getEnchantmentModifierDamage(entityPlayer.getArmorInventoryList(), causeExplosionDamage);
-            }
-            catch (Exception ex) {}
-            float n2 = damageAfterAbsorb * (1.0f - MathHelper.clamp((float)enchantmentModifierDamage, 0.0f, 20.0f) / 25.0f);
-            if (entityLivingBase.isPotionActive(MobEffects.RESISTANCE)) {
-                n2 -= n2 / 4.0f;
-            }
-            return Math.max(n2, 0.0f);
-        }
-        return CombatRules.getDamageAfterAbsorb(n, (float)entityLivingBase.getTotalArmorValue(), (float)entityLivingBase.getEntityAttribute(SharedMonsterAttributes.ARMOR_TOUGHNESS).getAttributeValue());
-    }
-    
-    public static float getDamageMultiplied(final float n) {
-        final int id = WurstplusCrystalUtil.mc.world.getDifficulty().getId();
-        return n * ((id == 0) ? 0.0f : ((id == 2) ? 1.0f : ((id == 1) ? 0.5f : 1.5f)));
-    }
-    
-    public static float calculateDamage(final EntityEnderCrystal entityEnderCrystal, final Entity entity) {
-        return calculateDamage(entityEnderCrystal.posX, entityEnderCrystal.posY, entityEnderCrystal.posZ, entity);
-    }
-    
-    private static /* synthetic */ boolean lambda$possiblePlacePositions$0(final boolean b, final BlockPos blockPos) {
-        return canPlaceCrystal(blockPos, b);
-    }
-    
-    static {
-        mc = Minecraft.getMinecraft();
-    }
+         } else if (mc.world.getBlockState(boost).getBlock() != Blocks.AIR || mc.world.getBlockState(boost2).getBlock() != Blocks.AIR && !thirteen) {
+            return false;
+         } else {
+            Iterator var5 = mc.world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(boost)).iterator();
+
+            Object entity;
+            do {
+               if (!var5.hasNext()) {
+                  var5 = mc.world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(boost2)).iterator();
+
+                  do {
+                     if (!var5.hasNext()) {
+                        var5 = mc.world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(final_boost)).iterator();
+
+                        do {
+                           if (!var5.hasNext()) {
+                              return true;
+                           }
+
+                           entity = var5.next();
+                        } while(!(entity instanceof EntityEnderCrystal));
+
+                        return false;
+                     }
+
+                     entity = var5.next();
+                  } while(entity instanceof EntityEnderCrystal);
+
+                  return false;
+               }
+
+               entity = var5.next();
+            } while(entity instanceof EntityEnderCrystal);
+
+            return false;
+         }
+      } catch (Exception var7) {
+         return false;
+      }
+   }
+
+   public static boolean canPlaceCrystal(BlockPos pos) {
+      Block block = mc.world.getBlockState(pos).getBlock();
+      if (block == Blocks.OBSIDIAN || block == Blocks.BEDROCK) {
+         Block floor = mc.world.getBlockState(pos.add(0, 1, 0)).getBlock();
+         Block ceil = mc.world.getBlockState(pos.add(0, 2, 0)).getBlock();
+         if (floor == Blocks.AIR && ceil == Blocks.AIR && mc.world.getEntitiesWithinAABBExcludingEntity((Entity)null, new AxisAlignedBB(pos.add(0, 1, 0))).isEmpty() && mc.world.getEntitiesWithinAABBExcludingEntity((Entity)null, new AxisAlignedBB(pos.add(0, 2, 0))).isEmpty()) {
+            return true;
+         }
+      }
+
+      return false;
+   }
+
+   public static float calculateDamage(double posX, double posY, double posZ, Entity entity) {
+      if (entity == mc.player && mc.player.capabilities.isCreativeMode) {
+         return 0.0F;
+      } else {
+         float doubleExplosionSize = 12.0F;
+         double distancedsize = entity.getDistance(posX, posY, posZ) / 12.0D;
+         Vec3d vec3d = new Vec3d(posX, posY, posZ);
+         double blockDensity = 0.0D;
+
+         try {
+            blockDensity = (double)entity.world.getBlockDensity(vec3d, entity.getEntityBoundingBox());
+         } catch (Exception var18) {
+         }
+
+         double v = (1.0D - distancedsize) * blockDensity;
+         float damage = (float)((int)((v * v + v) / 2.0D * 7.0D * 12.0D + 1.0D));
+         double finald = 1.0D;
+         if (entity instanceof EntityLivingBase) {
+            finald = (double)getBlastReduction((EntityLivingBase)entity, getDamageMultiplied(damage), new Explosion(mc.world, (Entity)null, posX, posY, posZ, 6.0F, false, true));
+         }
+
+         return (float)finald;
+      }
+   }
+
+   public static float getBlastReduction(EntityLivingBase entity, float damageI, Explosion explosion) {
+      float damage;
+      if (entity instanceof EntityPlayer) {
+         EntityPlayer ep = (EntityPlayer)entity;
+         DamageSource ds = DamageSource.causeExplosionDamage(explosion);
+         damage = CombatRules.getDamageAfterAbsorb(damageI, (float)ep.getTotalArmorValue(), (float)ep.getEntityAttribute(SharedMonsterAttributes.ARMOR_TOUGHNESS).getAttributeValue());
+         int k = 0;
+
+         try {
+            k = EnchantmentHelper.getEnchantmentModifierDamage(ep.getArmorInventoryList(), ds);
+         } catch (Exception var8) {
+         }
+
+         float f = MathHelper.clamp((float)k, 0.0F, 20.0F);
+         damage *= 1.0F - f / 25.0F;
+         if (entity.isPotionActive(MobEffects.RESISTANCE)) {
+            damage -= damage / 4.0F;
+         }
+
+         damage = Math.max(damage, 0.0F);
+         return damage;
+      } else {
+         damage = CombatRules.getDamageAfterAbsorb(damageI, (float)entity.getTotalArmorValue(), (float)entity.getEntityAttribute(SharedMonsterAttributes.ARMOR_TOUGHNESS).getAttributeValue());
+         return damage;
+      }
+   }
+
+   public static float getDamageMultiplied(float damage) {
+      int diff = mc.world.getDifficulty().getId();
+      return damage * (diff == 0 ? 0.0F : (diff == 2 ? 1.0F : (diff == 1 ? 0.5F : 1.5F)));
+   }
+
+   public static float calculateDamage(EntityEnderCrystal crystal, Entity entity) {
+      return calculateDamage(crystal.posX, crystal.posY, crystal.posZ, entity);
+   }
 }
