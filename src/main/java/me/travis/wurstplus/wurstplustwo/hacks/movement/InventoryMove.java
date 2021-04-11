@@ -78,4 +78,3 @@ public class InventoryMove extends WurstplusHack {
 
             ++keys_n_2;
         }
-    }
