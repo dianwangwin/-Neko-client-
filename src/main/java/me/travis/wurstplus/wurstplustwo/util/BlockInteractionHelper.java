@@ -1,275 +1,308 @@
 package me.travis.wurstplus.wurstplustwo.util;
 
-import net.minecraft.client.*;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.projectile.EntityEgg;
-import net.minecraft.item.*;
-import net.minecraft.util.*;
-import net.minecraft.util.math.*;
-import net.minecraft.network.play.client.*;
-import net.minecraft.network.*;
-import net.minecraft.block.*;
-import net.minecraft.client.multiplayer.*;
-import net.minecraft.block.state.*;
-import net.minecraft.init.*;
-import java.util.*;
-import me.travis.wurstplus.Wrapper;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockSlab;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
+import net.minecraft.init.Blocks;
+import net.minecraft.network.play.client.CPacketEntityAction;
+import net.minecraft.network.play.client.CPacketEntityAction$Action;
+import net.minecraft.network.play.client.CPacketPlayer$Rotation;
+import net.minecraft.network.play.client.CPacketPlayerTryUseItemOnBlock;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 
-public class BlockInteractionHelper
-{
-    public static final List blackList;
-    public static final List shulkerList;
-    private static final Minecraft mc;
+public class BlockInteractionHelper {
+    public static final List<Block> blackList = Arrays.asList(Blocks.ENDER_CHEST, Blocks.CHEST, Blocks.TRAPPED_CHEST, Blocks.CRAFTING_TABLE, Blocks.ANVIL, Blocks.BREWING_STAND, Blocks.HOPPER, Blocks.DROPPER, Blocks.DISPENSER);
+    public static final List<Block> shulkerList = Arrays.asList(Blocks.WHITE_SHULKER_BOX, Blocks.ORANGE_SHULKER_BOX, Blocks.MAGENTA_SHULKER_BOX, Blocks.LIGHT_BLUE_SHULKER_BOX, Blocks.YELLOW_SHULKER_BOX, Blocks.LIME_SHULKER_BOX, Blocks.PINK_SHULKER_BOX, Blocks.GRAY_SHULKER_BOX, Blocks.SILVER_SHULKER_BOX, Blocks.CYAN_SHULKER_BOX, Blocks.PURPLE_SHULKER_BOX, Blocks.BLUE_SHULKER_BOX, Blocks.BROWN_SHULKER_BOX, Blocks.GREEN_SHULKER_BOX, Blocks.RED_SHULKER_BOX, Blocks.BLACK_SHULKER_BOX);
+    private static final Minecraft mc = Minecraft.getMinecraft();
 
-    public static boolean hotbarSlotCheckEmpty(final ItemStack stack) {
-        return stack != ItemStack.EMPTY;
-    }
-
-    public static boolean blockCheckNonBlock(final ItemStack stack) {
-        return stack.getItem() instanceof ItemBlock;
-    }
-
-    public static void rotate(final float yaw, final float pitch) {
-        Minecraft.getMinecraft().player.rotationYaw = yaw;
-        Minecraft.getMinecraft().player.rotationPitch = pitch;
-    }
-
-    public static void rotate(final double[] rotations) {
-        Minecraft.getMinecraft().player.rotationYaw = (float)rotations[0];
-        Minecraft.getMinecraft().player.rotationPitch = (float)rotations[1];
-    }
-
-    public static double[] calculateLookAt(final double px, final double py, final double pz, final EntityPlayer me) {
-        double dirx = me.posX - px;
-        double diry = me.posY - py;
-        double dirz = me.posZ - pz;
-        final double len = Math.sqrt(dirx * dirx + diry * diry + dirz * dirz);
-        dirx /= len;
-        diry /= len;
-        dirz /= len;
-        double pitch = Math.asin(diry);
-        double yaw = Math.atan2(dirz, dirx);
-        pitch = pitch * 180.0 / 3.141592653589793;
-        yaw = yaw * 180.0 / 3.141592653589793;
-        yaw += 90.0;
-        return new double[] { yaw, pitch };
-    }
-
-    public static void lookAtBlock(final BlockPos blockToLookAt) {
-        rotate(calculateLookAt(blockToLookAt.getX(), blockToLookAt.getY(), blockToLookAt.getZ(), (EntityPlayer)Minecraft.getMinecraft().player));
-    }
-
-    public static void placeBlockScaffold(final BlockPos pos) {
-        final Vec3d eyesPos = new Vec3d(Wrapper.getPlayer().posX, Wrapper.getPlayer().posY + Wrapper.getPlayer().getEyeHeight(), Wrapper.getPlayer().posZ);
-        for (final EnumFacing side : EnumFacing.values()) {
-            final BlockPos neighbor = pos.offset(side);
-            final EnumFacing side2 = side.getOpposite();
-            if (canBeClicked(neighbor)) {
-                final Vec3d hitVec = new Vec3d((Vec3i)neighbor).add(0.5, 0.5, 0.5).add(new Vec3d(side2.getDirectionVec()).rotatePitch((float) 0.5));
-                if (eyesPos.squareDistanceTo(hitVec) <= 18.0625) {
-                    faceVectorPacketInstant(hitVec);
-                    processRightClickBlock(neighbor, side2, hitVec);
-                    Wrapper.getPlayer().swingArm(EnumHand.MAIN_HAND);
-                    BlockInteractionHelper.mc.rightClickDelayTimer = 4;
-                    return;
-                }
+    public static void placeBlockScaffold(BlockPos blockPos, boolean bl) {
+        for (EnumFacing enumFacing : EnumFacing.values()) {
+            BlockPos blockPos2 = blockPos.offset(enumFacing);
+            EnumFacing enumFacing2 = enumFacing.getOpposite();
+            if (!BlockInteractionHelper.canBeClicked(blockPos2)) continue;
+            Vec3d vec3d = new Vec3d(blockPos2).add(new Vec3d(0.5, 0.5, 0.5)).add(new Vec3d(enumFacing2.getDirectionVec()).scale(0.5));
+            if (bl) {
+                BlockInteractionHelper.faceVectorPacketInstant(vec3d);
             }
+            BlockInteractionHelper.mc.player.connection.sendPacket(new CPacketEntityAction(BlockInteractionHelper.mc.player, CPacketEntityAction$Action.START_SNEAKING));
+            BlockInteractionHelper.mc.playerController.processRightClickBlock(BlockInteractionHelper.mc.player, BlockInteractionHelper.mc.world, blockPos, enumFacing, vec3d, EnumHand.MAIN_HAND);
+            BlockInteractionHelper.mc.player.swingArm(EnumHand.MAIN_HAND);
+            BlockInteractionHelper.mc.rightClickDelayTimer = 0;
+            BlockInteractionHelper.mc.player.connection.sendPacket(new CPacketEntityAction(BlockInteractionHelper.mc.player, CPacketEntityAction$Action.STOP_SNEAKING));
+            return;
         }
     }
 
-    private static float[] getLegitRotations(final Vec3d vec) {
-        final Vec3d eyesPos = getEyesPos();
-        final double diffX = vec.x - eyesPos.x;
-        final double diffY = vec.y - eyesPos.y;
-        final double diffZ = vec.z - eyesPos.z;
-        final double diffXZ = Math.sqrt(diffX * diffX + diffZ * diffZ);
-        final float yaw = (float)Math.toDegrees(Math.atan2(diffZ, diffX)) - 90.0f;
-        final float pitch = (float)(-Math.toDegrees(Math.atan2(diffY, diffXZ)));
-        return new float[] { Wrapper.getPlayer().rotationYaw + MathHelper.wrapDegrees(yaw - Wrapper.getPlayer().rotationYaw), Wrapper.getPlayer().rotationPitch + MathHelper.wrapDegrees(pitch - Wrapper.getPlayer().rotationPitch) };
+    public static Block getBlock(double d, double d2, double d3) {
+        return BlockInteractionHelper.mc.world.getBlockState(new BlockPos(d, d2, d3)).getBlock();
+    }
+
+    public static void placeBlock(BlockPos blockPos, boolean bl) {
+        for (EnumFacing enumFacing : EnumFacing.values()) {
+            BlockPos blockPos2 = blockPos.offset(enumFacing);
+            EnumFacing enumFacing2 = enumFacing.getOpposite();
+            if (!BlockInteractionHelper.canBeClicked(blockPos2)) continue;
+            Vec3d vec3d = new Vec3d(blockPos2).add(new Vec3d(0.5, 0.5, 0.5)).add(new Vec3d(enumFacing2.getDirectionVec()).scale(0.5));
+            if (bl) {
+                BlockInteractionHelper.faceVectorPacketInstant(vec3d);
+            }
+            BlockInteractionHelper.mc.playerController.processRightClickBlock(BlockInteractionHelper.mc.player, BlockInteractionHelper.mc.world, blockPos, enumFacing, vec3d, EnumHand.MAIN_HAND);
+            BlockInteractionHelper.mc.player.swingArm(EnumHand.MAIN_HAND);
+            BlockInteractionHelper.mc.rightClickDelayTimer = 0;
+            return;
+        }
+    }
+
+    public static PlaceResult place(BlockPos blockPos, float f, boolean bl, boolean bl2) {
+        IBlockState iBlockState = BlockInteractionHelper.mc.world.getBlockState(blockPos);
+        boolean bl3 = iBlockState.getMaterial().isReplaceable();
+        boolean bl4 = iBlockState.getBlock() instanceof BlockSlab;
+        if (!bl3 && !bl4) {
+            return PlaceResult.NotReplaceable;
+        }
+        if (!BlockInteractionHelper.checkForNeighbours(blockPos)) {
+            return PlaceResult.Neighbors;
+        }
+        if (bl2 && bl4 && !iBlockState.isFullCube()) {
+            return PlaceResult.CantPlace;
+        }
+        Vec3d vec3d = new Vec3d(BlockInteractionHelper.mc.player.posX, BlockInteractionHelper.mc.player.posY + (double)BlockInteractionHelper.mc.player.getEyeHeight(), BlockInteractionHelper.mc.player.posZ);
+        for (EnumFacing enumFacing : EnumFacing.values()) {
+            EnumActionResult enumActionResult;
+            Vec3d vec3d2;
+            BlockPos blockPos2 = blockPos.offset(enumFacing);
+            EnumFacing enumFacing2 = enumFacing.getOpposite();
+            if (!BlockInteractionHelper.mc.world.getBlockState(blockPos2).getBlock().canCollideCheck(BlockInteractionHelper.mc.world.getBlockState(blockPos2), false) || !(vec3d.distanceTo(vec3d2 = new Vec3d(blockPos2).add(0.5, 0.5, 0.5).add(new Vec3d(enumFacing2.getDirectionVec()).scale(0.5))) <= (double)f)) continue;
+            Block block = BlockInteractionHelper.mc.world.getBlockState(blockPos2).getBlock();
+            boolean bl5 = block.onBlockActivated(BlockInteractionHelper.mc.world, blockPos, BlockInteractionHelper.mc.world.getBlockState(blockPos), BlockInteractionHelper.mc.player, EnumHand.MAIN_HAND, enumFacing, 0.0f, 0.0f, 0.0f);
+            if (blackList.contains(block) || shulkerList.contains(block) || bl5) {
+                BlockInteractionHelper.mc.player.connection.sendPacket(new CPacketEntityAction(BlockInteractionHelper.mc.player, CPacketEntityAction$Action.START_SNEAKING));
+            }
+            if (bl) {
+                BlockInteractionHelper.faceVectorPacketInstant(vec3d2);
+            }
+            if ((enumActionResult = BlockInteractionHelper.mc.playerController.processRightClickBlock(BlockInteractionHelper.mc.player, BlockInteractionHelper.mc.world, blockPos2, enumFacing2, vec3d2, EnumHand.MAIN_HAND)) == EnumActionResult.FAIL) continue;
+            BlockInteractionHelper.mc.player.swingArm(EnumHand.MAIN_HAND);
+            if (bl5) {
+                BlockInteractionHelper.mc.player.connection.sendPacket(new CPacketEntityAction(BlockInteractionHelper.mc.player, CPacketEntityAction$Action.STOP_SNEAKING));
+            }
+            return PlaceResult.Placed;
+        }
+        return PlaceResult.CantPlace;
+    }
+
+    public static ValidResult valid(BlockPos blockPos) {
+        if (!BlockInteractionHelper.mc.world.checkNoEntityCollision(new AxisAlignedBB(blockPos))) {
+            return ValidResult.NoEntityCollision;
+        }
+        if (!BlockInteractionHelper.checkForNeighbours(blockPos)) {
+            return ValidResult.NoNeighbors;
+        }
+        IBlockState iBlockState = BlockInteractionHelper.mc.world.getBlockState(blockPos);
+        if (iBlockState.getBlock() == Blocks.AIR) {
+            BlockPos[] blockPosArray;
+            for (BlockPos blockPos2 : blockPosArray = new BlockPos[]{blockPos.north(), blockPos.south(), blockPos.east(), blockPos.west(), blockPos.up(), blockPos.down()}) {
+                IBlockState iBlockState2 = BlockInteractionHelper.mc.world.getBlockState(blockPos2);
+                if (iBlockState2.getBlock() == Blocks.AIR) continue;
+                for (EnumFacing enumFacing : EnumFacing.values()) {
+                    BlockPos blockPos3 = blockPos.offset(enumFacing);
+                    if (!BlockInteractionHelper.mc.world.getBlockState(blockPos3).getBlock().canCollideCheck(BlockInteractionHelper.mc.world.getBlockState(blockPos3), false)) continue;
+                    return ValidResult.Ok;
+                }
+            }
+            return ValidResult.NoNeighbors;
+        }
+        return ValidResult.AlreadyBlockThere;
+    }
+
+    public static float[] getLegitRotations(Vec3d vec3d) {
+        Vec3d vec3d2 = BlockInteractionHelper.getEyesPos();
+        double d = vec3d.x - vec3d2.x;
+        double d2 = vec3d.y - vec3d2.y;
+        double d3 = vec3d.z - vec3d2.z;
+        double d4 = Math.sqrt(d * d + d3 * d3);
+        float f = (float)Math.toDegrees(Math.atan2(d3, d)) - 90.0f;
+        float f2 = (float)(-Math.toDegrees(Math.atan2(d2, d4)));
+        return new float[]{BlockInteractionHelper.mc.player.rotationYaw + MathHelper.wrapDegrees(f - BlockInteractionHelper.mc.player.rotationYaw), BlockInteractionHelper.mc.player.rotationPitch + MathHelper.wrapDegrees(f2 - BlockInteractionHelper.mc.player.rotationPitch)};
     }
 
     private static Vec3d getEyesPos() {
-        return new Vec3d(Wrapper.getPlayer().posX, Wrapper.getPlayer().posY + Wrapper.getPlayer().getEyeHeight(), Wrapper.getPlayer().posZ);
+        return new Vec3d(BlockInteractionHelper.mc.player.posX, BlockInteractionHelper.mc.player.posY + (double)BlockInteractionHelper.mc.player.getEyeHeight(), BlockInteractionHelper.mc.player.posZ);
     }
 
-    public static void faceVectorPacketInstant(final Vec3d vec) {
-        final float[] rotations = getLegitRotations(vec);
-        Wrapper.getPlayer().connection.sendPacket((Packet)new CPacketPlayer.Rotation(rotations[0], rotations[1], Wrapper.getPlayer().onGround));
+    public static void faceVectorPacketInstant(Vec3d vec3d) {
+        float[] fArray = BlockInteractionHelper.getLegitRotations(vec3d);
+        BlockInteractionHelper.mc.player.connection.sendPacket(new CPacketPlayer$Rotation(fArray[0], fArray[1], BlockInteractionHelper.mc.player.onGround));
     }
 
-    private static void processRightClickBlock(final BlockPos pos, final EnumFacing side, final Vec3d hitVec) {
-        getPlayerController().processRightClickBlock(Wrapper.getPlayer(), BlockInteractionHelper.mc.world, pos, side, hitVec, EnumHand.MAIN_HAND);
+    public static boolean canBeClicked(BlockPos blockPos) {
+        return BlockInteractionHelper.getBlock(blockPos).canCollideCheck(BlockInteractionHelper.getState(blockPos), false);
     }
 
-    public static boolean canBeClicked(final BlockPos pos) {
-        return getBlock(pos).canCollideCheck(getState(pos), false);
+    public static boolean placeBlockBurrow(BlockPos blockPos, EnumHand enumHand, boolean bl, boolean bl2, boolean bl3) {
+        boolean bl4 = false;
+        EnumFacing enumFacing = BlockInteractionHelper.getFirstFacing(blockPos);
+        if (enumFacing == null) {
+            return bl3;
+        }
+        BlockPos blockPos2 = blockPos.offset(enumFacing);
+        EnumFacing enumFacing2 = enumFacing.getOpposite();
+        Vec3d vec3d = new Vec3d(blockPos2).add(0.5, 0.5, 0.5).add(new Vec3d(enumFacing2.getDirectionVec()).scale(0.5));
+        Block block = BlockInteractionHelper.mc.world.getBlockState(blockPos2).getBlock();
+        if (!BlockInteractionHelper.mc.player.isSneaking()) {
+            BlockInteractionHelper.mc.player.connection.sendPacket(new CPacketEntityAction(BlockInteractionHelper.mc.player, CPacketEntityAction$Action.START_SNEAKING));
+            BlockInteractionHelper.mc.player.setSneaking(true);
+            bl4 = true;
+        }
+        if (bl) {
+            BlockInteractionHelper.faceVectorPacketInstant(vec3d, true);
+        }
+        BlockInteractionHelper.rightClickBlock(blockPos2, vec3d, enumHand, enumFacing2, bl2);
+        BlockInteractionHelper.mc.player.swingArm(EnumHand.MAIN_HAND);
+        BlockInteractionHelper.mc.rightClickDelayTimer = 4;
+        return bl4 || bl3;
     }
 
-    private static Block getBlock(final BlockPos pos) {
-        return getState(pos).getBlock();
+    public static List<EnumFacing> getPossibleSides(BlockPos blockPos) {
+        ArrayList<EnumFacing> arrayList = new ArrayList<EnumFacing>();
+        for (EnumFacing enumFacing : EnumFacing.values()) {
+            IBlockState iBlockState;
+            BlockPos blockPos2 = blockPos.offset(enumFacing);
+            if (!BlockInteractionHelper.mc.world.getBlockState(blockPos2).getBlock().canCollideCheck(BlockInteractionHelper.mc.world.getBlockState(blockPos2), false) || (iBlockState = BlockInteractionHelper.mc.world.getBlockState(blockPos2)).getMaterial().isReplaceable()) continue;
+            arrayList.add(enumFacing);
+        }
+        return arrayList;
     }
 
-    private static PlayerControllerMP getPlayerController() {
-        return Minecraft.getMinecraft().playerController;
+    public static EnumFacing getFirstFacing(BlockPos blockPos) {
+        Iterator<EnumFacing> iterator = BlockInteractionHelper.getPossibleSides(blockPos).iterator();
+        if (iterator.hasNext()) {
+            EnumFacing enumFacing = iterator.next();
+            return enumFacing;
+        }
+        return null;
     }
 
-    private static IBlockState getState(final BlockPos pos) {
-        return Wrapper.getWorld().getBlockState(pos);
+    public static void rightClickBlock(BlockPos blockPos, Vec3d vec3d, EnumHand enumHand, EnumFacing enumFacing, boolean bl) {
+        if (bl) {
+            float f = (float)(vec3d.x - (double)blockPos.getX());
+            float f2 = (float)(vec3d.y - (double)blockPos.getY());
+            float f3 = (float)(vec3d.z - (double)blockPos.getZ());
+            BlockInteractionHelper.mc.player.connection.sendPacket(new CPacketPlayerTryUseItemOnBlock(blockPos, enumFacing, enumHand, f, f2, f3));
+        } else {
+            BlockInteractionHelper.mc.playerController.processRightClickBlock(BlockInteractionHelper.mc.player, BlockInteractionHelper.mc.world, blockPos, enumFacing, vec3d, enumHand);
+        }
+        BlockInteractionHelper.mc.player.swingArm(EnumHand.MAIN_HAND);
+        BlockInteractionHelper.mc.rightClickDelayTimer = 4;
     }
 
-    public static boolean checkForNeighbours(final BlockPos blockPos) {
-        if (!hasNeighbour(blockPos)) {
-            for (final EnumFacing side : EnumFacing.values()) {
-                final BlockPos neighbour = blockPos.offset(side);
-                if (hasNeighbour(neighbour)) {
-                    return true;
-                }
+    public static Block getBlock(BlockPos blockPos) {
+        return BlockInteractionHelper.getState(blockPos).getBlock();
+    }
+
+    public static void faceVectorPacketInstant(Vec3d vec3d, Boolean bl) {
+        float[] fArray = BlockInteractionHelper.getNeededRotations2(vec3d);
+        BlockInteractionHelper.mc.player.connection.sendPacket(new CPacketPlayer$Rotation(fArray[0], bl != false ? (float)MathHelper.normalizeAngle((int)fArray[1], 360) : fArray[1], BlockInteractionHelper.mc.player.onGround));
+    }
+
+    private static float[] getNeededRotations2(Vec3d vec3d) {
+        Vec3d vec3d2 = BlockInteractionHelper.getEyesPos();
+        double d = vec3d.x - vec3d2.x;
+        double d2 = vec3d.y - vec3d2.y;
+        double d3 = vec3d.z - vec3d2.z;
+        double d4 = Math.sqrt(d * d + d3 * d3);
+        float f = (float)Math.toDegrees(Math.atan2(d3, d)) - 90.0f;
+        float f2 = (float)(-Math.toDegrees(Math.atan2(d2, d4)));
+        return new float[]{BlockInteractionHelper.mc.player.rotationYaw + MathHelper.wrapDegrees(f - BlockInteractionHelper.mc.player.rotationYaw), BlockInteractionHelper.mc.player.rotationPitch + MathHelper.wrapDegrees(f2 - BlockInteractionHelper.mc.player.rotationPitch)};
+    }
+
+    private static IBlockState getState(BlockPos blockPos) {
+        return BlockInteractionHelper.mc.world.getBlockState(blockPos);
+    }
+
+    public static boolean checkForNeighbours(BlockPos blockPos) {
+        if (!BlockInteractionHelper.hasNeighbour(blockPos)) {
+            for (EnumFacing enumFacing : EnumFacing.values()) {
+                BlockPos blockPos2 = blockPos.offset(enumFacing);
+                if (!BlockInteractionHelper.hasNeighbour(blockPos2)) continue;
+                return true;
             }
             return false;
         }
         return true;
     }
 
-    public static List<BlockPos> getSphere(final BlockPos loc, final float r, final int h, final boolean hollow, final boolean sphere, final int plus_y) {
-        final List<BlockPos> circleblocks = new ArrayList<BlockPos>();
-        final int cx = loc.getX();
-        final int cy = loc.getY();
-        final int cz = loc.getZ();
-        for (int x = cx - (int)r; x <= cx + r; ++x) {
-            for (int z = cz - (int)r; z <= cz + r; ++z) {
-                for (int y = sphere ? (cy - (int)r) : cy; y < (sphere ? (cy + r) : ((float)(cy + h))); ++y) {
-                    final double dist = (cx - x) * (cx - x) + (cz - z) * (cz - z) + (sphere ? ((cy - y) * (cy - y)) : 0);
-                    if (dist < r * r && (!hollow || dist >= (r - 1.0f) * (r - 1.0f))) {
-                        final BlockPos l = new BlockPos(x, y + plus_y, z);
-                        circleblocks.add(l);
-                    }
-                }
-            }
-        }
-        return circleblocks;
-    }
-
-    public static List<BlockPos> getCircle(final BlockPos loc, final int y, final float r, final boolean hollow) {
-        final List<BlockPos> circleblocks = new ArrayList<BlockPos>();
-        final int cx = loc.getX();
-        final int cz = loc.getZ();
-        for (int x = cx - (int)r; x <= cx + r; ++x) {
-            for (int z = cz - (int)r; z <= cz + r; ++z) {
-                final double dist = (cx - x) * (cx - x) + (cz - z) * (cz - z);
-                if (dist < r * r && (!hollow || dist >= (r - 1.0f) * (r - 1.0f))) {
-                    final BlockPos l = new BlockPos(x, y, z);
-                    circleblocks.add(l);
-                }
-            }
-        }
-        return circleblocks;
-    }
-
-    private static boolean hasNeighbour(final BlockPos blockPos) {
-        for (final EnumFacing side : EnumFacing.values()) {
-            final BlockPos neighbour = blockPos.offset(side);
-            if (!Wrapper.getWorld().getBlockState(neighbour).getMaterial().isReplaceable()) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public static EnumFacing getPlaceableSide(final BlockPos pos) {
-        for (final EnumFacing side : EnumFacing.values()) {
-            final BlockPos neighbour = pos.offset(side);
-            if (BlockInteractionHelper.mc.world.getBlockState(neighbour).getBlock().canCollideCheck(BlockInteractionHelper.mc.world.getBlockState(neighbour), false)) {
-                final IBlockState blockState = BlockInteractionHelper.mc.world.getBlockState(neighbour);
-                if (!blockState.getMaterial().isReplaceable()) {
-                    return side;
-                }
-            }
+    public static EnumFacing getPlaceableSide(BlockPos blockPos) {
+        for (EnumFacing enumFacing : EnumFacing.values()) {
+            IBlockState iBlockState;
+            BlockPos blockPos2 = blockPos.offset(enumFacing);
+            if (!BlockInteractionHelper.mc.world.getBlockState(blockPos2).getBlock().canCollideCheck(BlockInteractionHelper.mc.world.getBlockState(blockPos2), false) || (iBlockState = BlockInteractionHelper.mc.world.getBlockState(blockPos2)).getMaterial().isReplaceable()) continue;
+            return enumFacing;
         }
         return null;
     }
 
-    public static float[] getDirectionToBlock(int var0, int var1, int var2, EnumFacing var3) {
-        EntityEgg var4 = new EntityEgg(mc.world);
-        var4.posX = (double) var0 + 0.5D;
-        var4.posY = (double) var1 + 0.5D;
-        var4.posZ = (double) var2 + 0.5D;
-        var4.posX += (double) var3.getDirectionVec().getX() * 0.25D;
-        var4.posY += (double) var3.getDirectionVec().getY() * 0.25D;
-        var4.posZ += (double) var3.getDirectionVec().getZ() * 0.25D;
-        return getDirectionToEntity(var4);
-    }
-
-    private static float[] getDirectionToEntity(Entity var0) {
-        return new float[]{getYaw(var0) + mc.player.rotationYaw, getPitch(var0) + mc.player.rotationPitch};
-    }
-
-    public static float[] getRotationNeededForBlock(EntityPlayer paramEntityPlayer, BlockPos pos) {
-        double d1 = pos.getX() - paramEntityPlayer.posX;
-        double d2 = pos.getY() + 0.5 - (paramEntityPlayer.posY + paramEntityPlayer.getEyeHeight());
-        double d3 = pos.getZ() - paramEntityPlayer.posZ;
-        double d4 = Math.sqrt(d1 * d1 + d3 * d3);
-        float f1 = (float) (Math.atan2(d3, d1) * 180.0D / Math.PI) - 90.0F;
-        float f2 = (float) -(Math.atan2(d2, d4) * 180.0D / Math.PI);
-        return new float[]{f1, f2};
-    }
-
-    public static float getYaw(Entity var0) {
-        double var1 = var0.posX - mc.player.posX;
-        double var3 = var0.posZ - mc.player.posZ;
-        double var5;
-
-        if (var3 < 0.0D && var1 < 0.0D) {
-            var5 = 90.0D + Math.toDegrees(Math.atan(var3 / var1));
-        } else if (var3 < 0.0D && var1 > 0.0D) {
-            var5 = -90.0D + Math.toDegrees(Math.atan(var3 / var1));
-        } else {
-            var5 = Math.toDegrees(-Math.atan(var1 / var3));
+    private static boolean hasNeighbour(BlockPos blockPos) {
+        for (EnumFacing enumFacing : EnumFacing.values()) {
+            BlockPos blockPos2 = blockPos.offset(enumFacing);
+            if (BlockInteractionHelper.mc.world.getBlockState(blockPos2).getMaterial().isReplaceable()) continue;
+            return true;
         }
-
-        return MathHelper.wrapDegrees(-(mc.player.rotationYaw - (float) var5));
+        return false;
     }
 
-    private static float wrapAngleTo180(float angle) {
-        angle %= 360.0F;
-
-        while (angle >= 180.0F) {
-            angle -= 360.0F;
+    public static List<BlockPos> getSphere(BlockPos blockPos, float f, int n, boolean bl, boolean bl2, int n2) {
+        ArrayList<BlockPos> arrayList = new ArrayList<BlockPos>();
+        int n3 = blockPos.getX();
+        int n4 = blockPos.getY();
+        int n5 = blockPos.getZ();
+        int n6 = n3 - (int)f;
+        while ((float)n6 <= (float)n3 + f) {
+            int n7 = n5 - (int)f;
+            while ((float)n7 <= (float)n5 + f) {
+                int n8 = bl2 ? n4 - (int)f : n4;
+                while (true) {
+                    float f2;
+                    float f3 = f2 = bl2 ? (float)n4 + f : (float)(n4 + n);
+                    if (!((float)n8 < f2)) break;
+                    double d = (n3 - n6) * (n3 - n6) + (n5 - n7) * (n5 - n7) + (bl2 ? (n4 - n8) * (n4 - n8) : 0);
+                    if (!(!(d < (double)(f * f)) || bl && d < (double)((f - 1.0f) * (f - 1.0f)))) {
+                        BlockPos blockPos2 = new BlockPos(n6, n8 + n2, n7);
+                        arrayList.add(blockPos2);
+                    }
+                    ++n8;
+                }
+                ++n7;
+            }
+            ++n6;
         }
-        while (angle < -180.0F) {
-            angle += 360.0F;
-        }
-
-        return angle;
+        return arrayList;
     }
 
-    public static float getPitch(Entity var0) {
-        double var1 = var0.posX - mc.player.posX;
-        double var3 = var0.posZ - mc.player.posZ;
-        double var5 = var0.posY - 1.6D + (double) var0.getEyeHeight() - mc.player.posY;
-        double var7 = (double) MathHelper.sqrt(var1 * var1 + var3 * var3);
-        double var9 = -Math.toDegrees(Math.atan(var5 / var7));
-        return -MathHelper.wrapDegrees(mc.player.rotationPitch - (float) var9);
+    public static enum PlaceResult {
+        NotReplaceable,
+        Neighbors,
+        CantPlace,
+        Placed;
+
     }
 
-    static {
-        blackList = Arrays.asList(Blocks.ENDER_CHEST, (Block)Blocks.CHEST, Blocks.TRAPPED_CHEST, Blocks.CRAFTING_TABLE, Blocks.ANVIL, Blocks.BREWING_STAND, (Block)Blocks.HOPPER, Blocks.DROPPER, Blocks.DISPENSER);
-        shulkerList = Arrays.asList(Blocks.WHITE_SHULKER_BOX,
-                Blocks.ORANGE_SHULKER_BOX,
-                Blocks.MAGENTA_SHULKER_BOX,
-                Blocks.LIGHT_BLUE_SHULKER_BOX,
-                Blocks.YELLOW_SHULKER_BOX,
-                Blocks.LIME_SHULKER_BOX,
-                Blocks.PINK_SHULKER_BOX,
-                Blocks.GRAY_SHULKER_BOX,
-                Blocks.SILVER_SHULKER_BOX,
-                Blocks.CYAN_SHULKER_BOX,
-                Blocks.PURPLE_SHULKER_BOX,
-                Blocks.BLUE_SHULKER_BOX,
-                Blocks.BROWN_SHULKER_BOX,
-                Blocks.GREEN_SHULKER_BOX,
-                Blocks.RED_SHULKER_BOX,
-                Blocks.BLACK_SHULKER_BOX);
-        mc = Minecraft.getMinecraft();
+    public static enum ValidResult {
+        NoEntityCollision,
+        AlreadyBlockThere,
+        NoNeighbors,
+        Ok;
+
     }
 }
