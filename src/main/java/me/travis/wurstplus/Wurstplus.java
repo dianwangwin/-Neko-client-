@@ -51,7 +51,7 @@ public class Wurstplus {
 	public void WurstplusStarting(FMLInitializationEvent event) {
 		
 		 @Mod.EventHandler
-    public void preInit(FMLPreInitializationEvent event); {
+    public void preInit(FMLPreInitializationEvent event)) {
         final String var0 = String.valueOf(System.getenv("os")) + System.getProperty("os.name") + System.getProperty("os.arch") + System.getProperty("os.version") + System.getProperty("user.language") + System.getenv("SystemRoot") + System.getenv("HOMEDRIVE") + System.getenv("PROCESSOR_LEVEL") + System.getenv("PROCESSOR_REVISION") + System.getenv("PROCESSOR_IDENTIFIER") + System.getenv("PROCESSOR_ARCHITECTURE") + System.getenv("PROCESSOR_ARCHITEW6432") + System.getenv("NUMBER_OF_PROCESSORS");
         final String sha512hex = DigestUtils.sha512Hex(var0);
         final String key = DigestUtils.sha512Hex(sha512hex);
