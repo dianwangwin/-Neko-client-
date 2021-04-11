@@ -23,7 +23,7 @@ public class WurstplusCityEsp extends WurstplusHack {
 
     }
 
-    WurstplusSetting endcrystal_mode = create("EndCrystal", "CityEndCrystal", false);
+    WurstplusSetting endcrystal_mode = create("EndCrystal", "CityEndCrystal", true);
     WurstplusSetting mode = create("Mode", "CityMode", "Pretty", combobox("Pretty", "Solid", "Outline"));
     WurstplusSetting off_set = create("Height", "CityOffSetSide", 0.2, 0.0, 1.0);
     WurstplusSetting range = create("Range", "CityRange", 6, 1, 12);
