@@ -10,3 +10,4 @@
 - rpai: rpai come back to tha monkey
 - neko: da gamesense profesional coder and pro-gramer
 - _KA1 xannax dev & vulcan ;) (adds hwid lock)
+- perry (I hate cc ping players. true pvpers pvp with 30203 ping)
