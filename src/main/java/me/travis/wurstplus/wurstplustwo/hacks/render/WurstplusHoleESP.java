@@ -27,13 +27,13 @@ public class WurstplusHoleESP extends WurstplusHack {
 	}
 
 	WurstplusSetting mode 				= create("Mode", "HoleESPMode", "Pretty", combobox("Pretty", "Solid", "Outline"));
-	WurstplusSetting off_set 			= create("Height", "HoleESPOffSetSide", 0.2, 0.0, 1.0);
-	WurstplusSetting range   			= create("Range", "HoleESPRange", 6, 1, 12);
-	WurstplusSetting hide_own         	= create("Hide Own", "HoleESPHideOwn", true);
+	WurstplusSetting off_set 			= create("Height", "HoleESPOffSetSide", 1.0, -1.0, 1.0);
+	WurstplusSetting range   			= create("Range", "HoleESPRange", 6, 1, 20);
+	WurstplusSetting hide_own         	= create("Hide Own", "HoleESPHideOwn", false);
 
 	WurstplusSetting bedrock_view 		= create("info", "HoleESPbedrock", "Bedrock");
 	WurstplusSetting bedrock_enable 	= create("Bedrock Holes", "HoleESPBedrockHoles", true);
-	// WurstplusSetting rgb_b 				= create("RGB Effect", "HoleColorRGBEffect", true);
+	// WurstplusSetting rgb_b 				= create("RGB Effect", "HoleColorRGBEffect", false);
 	WurstplusSetting rb 				= create("R", "HoleESPRb", 0, 0, 255);
 	WurstplusSetting gb 				= create("G", "HoleESPGb", 255, 0, 255);
 	WurstplusSetting bb 				= create("B", "HoleESPBb", 0, 0, 255);
@@ -41,7 +41,7 @@ public class WurstplusHoleESP extends WurstplusHack {
 
 	WurstplusSetting obsidian_view 		= create("info", "HoleESPObsidian", "Obsidian");
 	WurstplusSetting obsidian_enable	= create("Obsidian Holes", "HoleESPObsidianHoles", true);
-	// WurstplusSetting rgb_o 				= create("RGB Effect", "HoleColorRGBEffect", true);
+	// WurstplusSetting rgb_o 				= create("RGB Effect", "HoleColorRGBEffect", false);
 	WurstplusSetting ro 				= create("R", "HoleESPRo", 255, 0, 255);
 	WurstplusSetting go				    = create("G", "HoleESPGo", 0, 0, 255);
 	WurstplusSetting bo 				= create("B", "HoleESPBo", 0, 0, 255);
