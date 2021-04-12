@@ -29,15 +29,15 @@ public class WurstplusMessageUtil {
 	public static void toggle_message(WurstplusHack module) {
 		if (module.is_active()) {
 			if (module.get_tag().equals("AutoCrystal")) {
-				client_message_simple(opener + "Nekomode" + ChatFormatting.GREEN + " activated");
+				client_message_simple(opener + "Nekomode" + ChatFormatting.GREEN + " Activated");
 			} else {
 				client_message_simple(opener + r + module.get_name() + ChatFormatting.GREEN + " Activated");
 			}			
 		} else {
 			if (module.get_tag().equals("AutoCrystal")) {
-				client_message_simple(opener + "Nekomode" + d + " deactivated ");
+				client_message_simple(opener + "Nekomode" + d + " Deactivated ");
 			} else {
-				client_message_simple(opener + r + module.get_name() + d + " deactivated");
+				client_message_simple(opener + r + module.get_name() + d + " Deactivated");
 			}
 		}
 	}
