@@ -29,7 +29,7 @@ public class WurstplusUser extends WurstplusPinnable {
 		String line;
 
 		if (time >= 0 && time < 12) {
-			line = "morning," + ChatFormatting.DARK_PURPLE + ChatFormatting.BOLD + mc.player.getName() + ChatFormatting.RESET + "nekohax too good :)";
+			line = "morning, " + ChatFormatting.DARK_PURPLE + ChatFormatting.BOLD + mc.player.getName() + ChatFormatting.RESET + "nekohax too good :)";
 		} else if (time >= 12 && time < 16) {
 			line = "Hi, " + ChatFormatting.DARK_PURPLE + ChatFormatting.BOLD +  mc.player.getName() + ChatFormatting.RESET + "you are hot asf";
 		} else if (time >= 16 && time < 24) {
