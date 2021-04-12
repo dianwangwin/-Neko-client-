@@ -119,7 +119,7 @@ jar {
 			"MixinConfigs"                : "mixins.nekohax.json",
 			"tweakClass"                  : "org.spongepowered.asm.launch.MixinTweaker",
 			"TweakOrder"                  : 0,
-			"FMLAT"                       : "wurstplus_at.cfg"
+			"FMLAT"                       : "nekohax_at.cfg"
 		)
 	}
 }
