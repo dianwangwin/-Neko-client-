@@ -2,7 +2,7 @@
 	"required"           : true,
 	"compatibilityLevel" : "JAVA_8",
 	"package"            : "me.travis.wurstplus.mixins",
-	"refmap"             : "mixins.wurstplus.refmap.json",
+	"refmap"             : "mixins.nekohax.refmap.json",
 	"mixins"             : [
 		"WurstplusMixinPlayerControllerMP",
 		"WurstplusMixinNetworkManager",
