@@ -40,6 +40,7 @@ public class WurstplusModuleManager {
 		add_hack(new WurstplusTotempop());
 		add_hack(new WurstplusClearChat());
 		add_hack(new WurstplusChatMods());
+		add_hack(new WurstplusChatSuffix());
 		add_hack(new WurstplusAutoEz());
 		add_hack(new WurstplusAntiRacist());
 		add_hack(new WurstplusAnnouncer());
