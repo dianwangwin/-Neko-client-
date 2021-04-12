@@ -1,5 +1,8 @@
 package me.travis.wurstplus.wurstplustwo.hacks.combat;
 
+import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Collectors;
 import me.travis.turok.draw.RenderHelp;
 import me.travis.wurstplus.wurstplustwo.event.events.WurstplusEventRender;
 import me.travis.wurstplus.wurstplustwo.guiscreen.settings.WurstplusSetting;
@@ -8,7 +11,6 @@ import me.travis.wurstplus.wurstplustwo.hacks.WurstplusHack;
 import me.travis.wurstplus.wurstplustwo.util.WurstplusBlockInteractHelper;
 import me.travis.wurstplus.wurstplustwo.util.WurstplusBlockUtil;
 import me.travis.wurstplus.wurstplustwo.util.WurstplusFriendUtil;
-import me.travis.wurstplus.wurstplustwo.util.WurstplusMessageUtil;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,227 +18,199 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.network.play.client.CPacketEntityAction;
-import net.minecraft.network.play.client.CPacketPlayer;
+import net.minecraft.network.play.client.CPacketEntityAction.Action;
+import net.minecraft.network.play.client.CPacketPlayer.Rotation;
 import net.minecraft.util.math.BlockPos;
 
-import java.util.stream.Collectors;
-
 public class WurstplusBedAura extends WurstplusHack {
+    WurstplusSetting delay = this.create("Delay", "BedAuraDelay", 6, 0, 20);
+    WurstplusSetting range = this.create("Range", "BedAuraRange", 5, 0, 6);
+    WurstplusSetting hard = this.create("Hard Rotate", "BedAuraRotate", false);
+    WurstplusSetting swing = this.create("Swing", "BedAuraSwing", "Mainhand", this.combobox(new String[]{"Mainhand", "Offhand", "Both", "None"}));
+    private BlockPos render_pos;
+    private int counter;
+    private WurstplusBedAura.spoof_face spoof_looking;
 
     public WurstplusBedAura() {
         super(WurstplusCategory.WURSTPLUS_COMBAT);
-
-        this.name        = "Bed Aura";
-        this.tag         = "BedAura";
+        this.name = "Bed Aura";
+        this.tag = "BedAura";
         this.description = "fucking endcrystal.me";
     }
 
-    WurstplusSetting delay = create("Delay", "BedAuraDelay", 6, 0 , 20);
-    WurstplusSetting range = create("Range", "BedAuraRange", 5, 0, 6);
-    WurstplusSetting hard = create("Hard Rotate", "BedAuraRotate", false);
-    WurstplusSetting swing = create("Swing", "BedAuraSwing", "Mainhand", combobox("Mainhand", "Offhand", "Both", "None"));
-
-    private BlockPos render_pos;
-    private int counter;
-    private spoof_face spoof_looking;
-
-
-    @Override
     protected void enable() {
-        render_pos = null;
-        counter = 0;
+        this.render_pos = null;
+        this.counter = 0;
     }
 
-    @Override
     protected void disable() {
-        render_pos = null;
+        this.render_pos = null;
     }
 
-    @Override
     public void update() {
+        if (mc.player != null) {
+            if (this.counter > this.delay.get_value(1)) {
+                this.counter = 0;
+                this.place_bed();
+                this.break_bed();
+                this.refill_bed();
+            }
 
-        if (mc.player == null) return;
-
-        if (counter > delay.get_value(1)) {
-            counter = 0;
-            place_bed();
-            break_bed();
-            refill_bed();
+            ++this.counter;
         }
-
-        counter++;
-
     }
 
     public void refill_bed() {
-        if (!(mc.currentScreen instanceof GuiContainer)) {
-            if (mc.player.inventory.getCurrentItem().getItem() == Items.AIR) {
-                for (int i = 9; i < 35; ++i) {
-                    if (mc.player.inventory.getStackInSlot(i).getItem() == Items.BED) {
-                        mc.playerController.windowClick(mc.player.inventoryContainer.windowId, i, 0, ClickType.SWAP, mc.player);
-                        break;
-                    }
+        if (!(mc.currentScreen instanceof GuiContainer) && this.is_space()) {
+            for(int i = 9; i < 35; ++i) {
+                if (mc.player.inventory.getStackInSlot(i).getItem() == Items.BED) {
+                    mc.playerController.windowClick(mc.player.inventoryContainer.windowId, i, 0, ClickType.QUICK_MOVE, mc.player);
+                    break;
                 }
             }
         }
+
+    }
+
+    private boolean is_space() {
+        for(int i = 0; i < 9; ++i) {
+            if (mc.player.inventoryContainer.getSlot(i).getHasStack()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public void place_bed() {
+        if (this.find_bed() != -1) {
+            int bed_slot = this.find_bed();
+            BlockPos best_pos = null;
+            EntityPlayer best_target = null;
+            float best_distance = (float)this.range.get_value(1);
+            Iterator var5 = ((List)mc.world.playerEntities.stream().filter((entityPlayer) -> {
+                return !WurstplusFriendUtil.isFriend(entityPlayer.getName());
+            }).collect(Collectors.toList())).iterator();
 
-        if (find_bed() == -1) {
-            WurstplusMessageUtil.send_client_error_message("CANNOT FIND BEDS");
-            this.set_disable();
-            return;
-        }
+            while(var5.hasNext()) {
+                EntityPlayer player = (EntityPlayer)var5.next();
+                if (player != mc.player && !(best_distance < mc.player.getDistance(player))) {
+                    boolean face_place = true;
+                    BlockPos pos = get_pos_floor(player).down();
+                    BlockPos pos2 = this.check_side_block(pos);
+                    if (pos2 != null) {
+                        best_pos = pos2.up();
+                        best_target = player;
+                        best_distance = mc.player.getDistance(player);
+                        face_place = false;
+                    }
 
-        int bed_slot = find_bed();
-
-        BlockPos best_pos = null;
-        EntityPlayer best_target = null;
-        float best_distance = (float) range.get_value(1);
-
-        for (EntityPlayer player : mc.world.playerEntities.stream().filter(entityPlayer -> !WurstplusFriendUtil.isFriend(entityPlayer.getName())).collect(Collectors.toList())) {
-
-            if (player == mc.player) continue;
-
-            if (best_distance < mc.player.getDistance(player)) continue;
-
-            boolean face_place = true;
-
-            BlockPos pos = get_pos_floor(player).down();
-            BlockPos pos2 = check_side_block(pos);
-
-            if (pos2 != null) {
-                best_pos = pos2.up();
-                best_target = player;
-                best_distance = mc.player.getDistance(player);
-                face_place = false;
-            }
-
-            if (face_place) {
-                BlockPos upos = get_pos_floor(player);
-                BlockPos upos2 = check_side_block(upos);
-
-                if (upos2 != null) {
-                    best_pos = upos2.up();
-                    best_target = player;
-                    best_distance = mc.player.getDistance(player);
+                    if (face_place) {
+                        BlockPos upos = get_pos_floor(player);
+                        BlockPos upos2 = this.check_side_block(upos);
+                        if (upos2 != null) {
+                            best_pos = upos2.up();
+                            best_target = player;
+                            best_distance = mc.player.getDistance(player);
+                        }
+                    }
                 }
             }
+
+            if (best_target != null) {
+                this.render_pos = best_pos;
+                if (this.spoof_looking == WurstplusBedAura.spoof_face.NORTH) {
+                    if (this.hard.get_value(true)) {
+                        mc.player.rotationYaw = 180.0F;
+                    }
+
+                    mc.player.connection.sendPacket(new Rotation(180.0F, 0.0F, mc.player.onGround));
+                } else if (this.spoof_looking == WurstplusBedAura.spoof_face.SOUTH) {
+                    if (this.hard.get_value(true)) {
+                        mc.player.rotationYaw = 0.0F;
+                    }
+
+                    mc.player.connection.sendPacket(new Rotation(0.0F, 0.0F, mc.player.onGround));
+                } else if (this.spoof_looking == WurstplusBedAura.spoof_face.WEST) {
+                    if (this.hard.get_value(true)) {
+                        mc.player.rotationYaw = 90.0F;
+                    }
+
+                    mc.player.connection.sendPacket(new Rotation(90.0F, 0.0F, mc.player.onGround));
+                } else if (this.spoof_looking == WurstplusBedAura.spoof_face.EAST) {
+                    if (this.hard.get_value(true)) {
+                        mc.player.rotationYaw = -90.0F;
+                    }
+
+                    mc.player.connection.sendPacket(new Rotation(-90.0F, 0.0F, mc.player.onGround));
+                }
+
+                WurstplusBlockUtil.placeBlock(best_pos, bed_slot, false, false, this.swing);
+            }
         }
-
-        if (best_target == null) {
-            WurstplusMessageUtil.send_client_message("cant find best player");
-            this.set_disable();
-            return;
-        }
-
-        render_pos = best_pos;
-
-        if (spoof_looking == spoof_face.NORTH) {
-            if (hard.get_value(true)) {
-                mc.player.rotationYaw = 180;
-            }
-            mc.player.connection.sendPacket(new CPacketPlayer.Rotation(180, 0, mc.player.onGround));
-        } else if (spoof_looking == spoof_face.SOUTH) {
-            if (hard.get_value(true)) {
-                mc.player.rotationYaw = 0;
-            }
-            mc.player.connection.sendPacket(new CPacketPlayer.Rotation(0, 0, mc.player.onGround));
-        } else if (spoof_looking == spoof_face.WEST) {
-            if (hard.get_value(true)) {
-                mc.player.rotationYaw = 90;
-            }
-            mc.player.connection.sendPacket(new CPacketPlayer.Rotation(90, 0, mc.player.onGround));
-        } else if (spoof_looking == spoof_face.EAST) {
-            if (hard.get_value(true)) {
-                mc.player.rotationYaw = -90;
-            }
-            mc.player.connection.sendPacket(new CPacketPlayer.Rotation(-90, 0, mc.player.onGround));
-        }
-
-        WurstplusBlockUtil.placeBlock(best_pos, bed_slot, false, false, swing);
-
     }
 
     public void break_bed() {
-
-        for (BlockPos pos : WurstplusBlockInteractHelper.getSphere(get_pos_floor(mc.player), range.get_value(1), range.get_value(1), false, true, 0)
-                .stream().filter(WurstplusBedAura::is_bed).collect(Collectors.toList())) {
-
+        BlockPos pos;
+        for(Iterator var1 = ((List)WurstplusBlockInteractHelper.getSphere(get_pos_floor(mc.player), (float)this.range.get_value(1), this.range.get_value(1), false, true, 0).stream().filter(WurstplusBedAura::is_bed).collect(Collectors.toList())).iterator(); var1.hasNext(); WurstplusBlockUtil.openBlock(pos)) {
+            pos = (BlockPos)var1.next();
             if (mc.player.isSneaking()) {
-                mc.player.connection.sendPacket(new CPacketEntityAction(mc.player, CPacketEntityAction.Action.STOP_SNEAKING));
+                mc.player.connection.sendPacket(new CPacketEntityAction(mc.player, Action.STOP_SNEAKING));
             }
-            WurstplusBlockUtil.openBlock(pos);
-
         }
 
     }
 
     public int find_bed() {
-
-        for (int i = 0; i < 9; i++) {
+        for(int i = 0; i < 9; ++i) {
             if (mc.player.inventory.getStackInSlot(i).getItem() == Items.BED) {
                 return i;
             }
         }
+
         return -1;
     }
 
     public BlockPos check_side_block(BlockPos pos) {
-
         if (mc.world.getBlockState(pos.east()).getBlock() != Blocks.AIR && mc.world.getBlockState(pos.east().up()).getBlock() == Blocks.AIR) {
-            spoof_looking = spoof_face.WEST;
+            this.spoof_looking = WurstplusBedAura.spoof_face.WEST;
             return pos.east();
-        }
-        if (mc.world.getBlockState(pos.north()).getBlock() != Blocks.AIR && mc.world.getBlockState(pos.north().up()).getBlock() == Blocks.AIR) {
-            spoof_looking = spoof_face.SOUTH;
+        } else if (mc.world.getBlockState(pos.north()).getBlock() != Blocks.AIR && mc.world.getBlockState(pos.north().up()).getBlock() == Blocks.AIR) {
+            this.spoof_looking = WurstplusBedAura.spoof_face.SOUTH;
             return pos.north();
-        }
-        if (mc.world.getBlockState(pos.west()).getBlock() != Blocks.AIR && mc.world.getBlockState(pos.west().up()).getBlock() == Blocks.AIR) {
-            spoof_looking = spoof_face.EAST;
+        } else if (mc.world.getBlockState(pos.west()).getBlock() != Blocks.AIR && mc.world.getBlockState(pos.west().up()).getBlock() == Blocks.AIR) {
+            this.spoof_looking = WurstplusBedAura.spoof_face.EAST;
             return pos.west();
-        }
-        if (mc.world.getBlockState(pos.south()).getBlock() != Blocks.AIR && mc.world.getBlockState(pos.south().up()).getBlock() == Blocks.AIR) {
-            spoof_looking = spoof_face.NORTH;
+        } else if (mc.world.getBlockState(pos.south()).getBlock() != Blocks.AIR && mc.world.getBlockState(pos.south().up()).getBlock() == Blocks.AIR) {
+            this.spoof_looking = WurstplusBedAura.spoof_face.NORTH;
             return pos.south();
+        } else {
+            return null;
         }
-
-        return null;
-
     }
 
     public static BlockPos get_pos_floor(EntityPlayer player) {
         return new BlockPos(Math.floor(player.posX), Math.floor(player.posY), Math.floor(player.posZ));
     }
 
-    public static boolean is_bed(final BlockPos pos) {
-        final Block block = mc.world.getBlockState(pos).getBlock();
+    public static boolean is_bed(BlockPos pos) {
+        Block block = mc.world.getBlockState(pos).getBlock();
         return block == Blocks.BED;
     }
 
-    @Override
     public void render(WurstplusEventRender event) {
-
-        if (render_pos == null) return;
-
-        RenderHelp.prepare("lines");
-        RenderHelp.draw_cube_line(RenderHelp.get_buffer_build(),
-                render_pos.getX(), render_pos.getY(), render_pos.getZ(),
-            1, .2f, 1,
-            255, 20, 20, 180,
-            "all"
-        );
-        RenderHelp.release();
-
-
+        if (this.render_pos != null) {
+            RenderHelp.prepare("lines");
+            RenderHelp.draw_cube_line(RenderHelp.get_buffer_build(), (float)this.render_pos.getX(), (float)this.render_pos.getY(), (float)this.render_pos.getZ(), 1.0F, 0.2F, 1.0F, 255, 20, 20, 180, "all");
+            RenderHelp.release();
+        }
     }
 
-    enum spoof_face {
+    static enum spoof_face {
         EAST,
         WEST,
         NORTH,
-        SOUTH
+        SOUTH;
     }
-
 }
+ 
