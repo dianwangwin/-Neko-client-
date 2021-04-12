@@ -78,16 +78,16 @@ public class WurstplusBlockInteractHelper {
 
     }
 
-    public static BlockInteractionHelper.PlaceResult place(BlockPos pos, float p_Distance, boolean p_Rotate, boolean p_UseSlabRule) {
+    public static WurstplusBlockInteractHelper.PlaceResult place(BlockPos pos, float p_Distance, boolean p_Rotate, boolean p_UseSlabRule) {
         IBlockState l_State = mc.world.getBlockState(pos);
         boolean l_Replaceable = l_State.getMaterial().isReplaceable();
         boolean l_IsSlabAtBlock = l_State.getBlock() instanceof BlockSlab;
         if (!l_Replaceable && !l_IsSlabAtBlock) {
-            return BlockInteractionHelper.PlaceResult.NotReplaceable;
+            return WurstplusBlockInteractHelper.PlaceResult.NotReplaceable;
         } else if (!checkForNeighbours(pos)) {
-            return BlockInteractionHelper.PlaceResult.Neighbors;
+            return WurstplusBlockInteractHelper.PlaceResult.Neighbors;
         } else if (p_UseSlabRule && l_IsSlabAtBlock && !l_State.isFullCube()) {
-            return BlockInteractionHelper.PlaceResult.CantPlace;
+            return WurstplusBlockInteractHelper.PlaceResult.CantPlace;
         } else {
             Vec3d eyesPos = new Vec3d(mc.player.posX, mc.player.posY + (double)mc.player.getEyeHeight(), mc.player.posZ);
             EnumFacing[] var8 = EnumFacing.values();
@@ -117,25 +117,25 @@ public class WurstplusBlockInteractHelper {
                                 mc.player.connection.sendPacket(new CPacketEntityAction(mc.player, Action.STOP_SNEAKING));
                             }
 
-                            return BlockInteractionHelper.PlaceResult.Placed;
+                            return WurstplusBlockInteractHelper.PlaceResult.Placed;
                         }
                     }
                 }
             }
 
-            return BlockInteractionHelper.PlaceResult.CantPlace;
+            return WurstplusBlockInteractHelper.PlaceResult.CantPlace;
         }
     }
 
-    public static BlockInteractionHelper.ValidResult valid(BlockPos pos) {
+    public static WurstplusBlockInteractHelper.ValidResult valid(BlockPos pos) {
         if (!mc.world.checkNoEntityCollision(new AxisAlignedBB(pos))) {
-            return BlockInteractionHelper.ValidResult.NoEntityCollision;
+            return WurstplusBlockInteractHelper.ValidResult.NoEntityCollision;
         } else if (!checkForNeighbours(pos)) {
-            return BlockInteractionHelper.ValidResult.NoNeighbors;
+            return WurstplusBlockInteractHelper.ValidResult.NoNeighbors;
         } else {
             IBlockState l_State = mc.world.getBlockState(pos);
             if (l_State.getBlock() != Blocks.AIR) {
-                return BlockInteractionHelper.ValidResult.AlreadyBlockThere;
+                return WurstplusBlockInteractHelper.ValidResult.AlreadyBlockThere;
             } else {
                 BlockPos[] l_Blocks = new BlockPos[]{pos.north(), pos.south(), pos.east(), pos.west(), pos.up(), pos.down()};
                 BlockPos[] var3 = l_Blocks;
@@ -152,13 +152,13 @@ public class WurstplusBlockInteractHelper {
                             EnumFacing side = var8[var10];
                             BlockPos neighbor = pos.offset(side);
                             if (mc.world.getBlockState(neighbor).getBlock().canCollideCheck(mc.world.getBlockState(neighbor), false)) {
-                                return BlockInteractionHelper.ValidResult.Ok;
+                                return WurstplusBlockInteractHelper.ValidResult.Ok;
                             }
                         }
                     }
                 }
 
-                return BlockInteractionHelper.ValidResult.NoNeighbors;
+                return WurstplusBlockInteractHelper.ValidResult.NoNeighbors;
             }
         }
     }
