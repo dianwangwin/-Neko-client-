@@ -41,7 +41,8 @@ public class WurstplusChatSuffix extends WurstplusHack {
 		"snine19",
 		"goldenpancakes",
 		"cober",
-		"schmoke"
+		"schmoke",
+		"perry
 	};
 
 	String[] random_client_finish = {
