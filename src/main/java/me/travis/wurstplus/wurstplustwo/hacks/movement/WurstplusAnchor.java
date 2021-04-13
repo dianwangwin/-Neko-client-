@@ -52,7 +52,7 @@ public class WurstplusAnchor extends WurstplusHack {
         }
     });
 
-    public WurstPlusAnchor() {
+    public WurstplusAnchor() {
         super(WurstplusCategory.WURSTPLUS_MOVEMENT);
 
         this.name = "Anchor";
