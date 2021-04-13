@@ -95,7 +95,7 @@ public class WurstplusConfigManager {
         try {
             writer.write(WurstplusEzMessageUtil.get_message());
         } catch (Exception ignored) {
-            writer.write("test message");
+            writer.write("You just got nya'd by NekoHax");
         }
 
         writer.close();
