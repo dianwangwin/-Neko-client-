@@ -15,7 +15,7 @@ public class WurstplusArmorDurabilityWarner extends WurstplusPinnable { // STILL
     @Override
 	public void render() {
 
-		String line = "ur armor is kinda low rn :/";
+		String line = "watch ur boots awa";
 
         if (is_damaged()) {
             create_line(line, this.docking(1, line), 2, 255, 20, 20, 255);
