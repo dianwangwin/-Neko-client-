@@ -8,8 +8,8 @@ import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class WurstplusViewmodleChanger extends WurstplusHack {
-    public WurstplusViewmodleChanger() {
+public class WurstplusViewmodelChanger extends WurstplusHack {
+    public WurstplusViewmodelChanger() {
         super(WurstplusCategory.WURSTPLUS_RENDER);
 
         this.name = "Custom Viewmodel";
