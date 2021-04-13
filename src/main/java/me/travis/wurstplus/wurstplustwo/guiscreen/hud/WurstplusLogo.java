@@ -11,7 +11,7 @@ public class WurstplusLogo extends WurstplusPinnable {
         super("Logo", "Logo", 1, 0, 0);
     }
 
-    ResourceLocation r = new ResourceLocation("custom/wurst.png");
+    ResourceLocation r = new ResourceLocation("custom/nekohax.png");
 
     @Override
 	public void render() {
