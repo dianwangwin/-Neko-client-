@@ -151,7 +151,7 @@ public class WurstplusModuleManager {
 	}
 
 	public void render(RenderWorldLastEvent event) {
-		mc.profiler.startSection("wurstplus");
+		mc.profiler.startSection("nekohax");
 		mc.profiler.startSection("setup");
 
 		GlStateManager.disableTexture2D();
