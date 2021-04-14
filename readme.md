@@ -4,7 +4,7 @@
 
 - Head dev: Profkambing (barely knows java) most commits and inteligence -1
 - Retarded dev: Vaimok (chad pvper) (cant skif from same base)
-- Another retarded dev: rTe (renamed phobos)
+- Another retarded dev: rTe (wannabe Froot Loops)
 - GUI maker: Momin (cookie client dev!!!) nigga does nothing
 - less retarded dev: Trambled (ozark client dev) does 2 commits and gone
 - rpai: rpai come back to tha monkey (gorillas know more java then him)
