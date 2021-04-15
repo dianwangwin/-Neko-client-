@@ -30,7 +30,7 @@ group            project.client_group
 minecraft {
 	version  = "1.12.2-14.23.0.2531"
 	runDir   = "run"
-	coreMod  = "me.travis.wurstplus.mixins.WurstplusMixinLoader"
+	coreMod  = "me.neko.wurstplus.mixins.WurstplusMixinLoader"
 	mappings = "snapshot_20180814"
 	makeObfSourceJar = true
 }
@@ -114,7 +114,7 @@ jar {
 		attributes (
 			"FMLCorePluginContainsFMLMod" : "true",
 			"ForceLoadAsMod"              : "true",
-			"FMLCorePlugin"               : "me.travis.wurstplus.mixins.WurstplusMixinLoader",
+			"FMLCorePlugin"               : "me.neko.wurstplus.mixins.WurstplusMixinLoader",
 			"MixinConfigs"                : "mixins.nekohax.json",
 			"tweakClass"                  : "org.spongepowered.asm.launch.MixinTweaker",
 			"TweakOrder"                  : 0,
