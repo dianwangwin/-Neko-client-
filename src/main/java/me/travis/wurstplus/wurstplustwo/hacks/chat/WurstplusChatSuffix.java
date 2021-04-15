@@ -20,7 +20,7 @@ public class WurstplusChatSuffix extends WurstplusHack {
 
 		this.name        = "Chat Suffix";
 		this.tag         = "ChatSuffix";
-		this.description = "show off how cool u are";
+		this.description = "Show off how cool u are using nekohax.";
 	}
 
 	WurstplusSetting ignore = create("Ignore", "ChatSuffixIgnore", true);
@@ -42,19 +42,20 @@ public class WurstplusChatSuffix extends WurstplusHack {
 		"goldenpancakes",
 		"cober",
 		"schmoke",
-		"perry"
+		"perry",
+		"rpai"
 	};
 
 	String[] random_client_finish = {
 		" plus",
 		" epic",
-		"god",
+		" god",
 		" sex",
 		" blue",
 		" brown",
 		" gay",
-		"plus",
-		""
+		" plus",
+		" furry"
 	};
 
 	@EventHandler
