@@ -5,7 +5,7 @@ import lgbt.vaimok.neko.nekohax.event.rotateevents.EntityRenderEvent;
 import lgbt.vaimok.neko.nekohax.event.rotateevents.OnUpdateWalkingPlayerEvent;
 import lgbt.vaimok.neko.nekohax.event.rotateevents.PacketEvent;
 import lgbt.vaimok.neko.nekohax.event.rotateevents.Phase;
-import me.neko.wurstplus.wurstplustwo.util.CollectionUtil;
+import lgbt.vaimok.neko.nekohax.util.CollectionUtil;
 import me.zero.alpine.fork.event.EventPriority;
 import me.zero.alpine.fork.listener.EventHandler;
 import me.zero.alpine.fork.listener.Listener;

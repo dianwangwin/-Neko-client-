@@ -2,8 +2,8 @@ package lgbt.vaimok.neko.nekohax.event.rotateevents;
 
 
 import lgbt.vaimok.neko.nekohax.event.EventCancellable;
+import lgbt.vaimok.neko.nekohax.util.EnumUtil;
 import lgbt.vaimok.neko.nekohax.util.rotation.PlayerPacket;
-import me.neko.wurstplus.wurstplustwo.util.EnumUtil;
 
 import net.minecraft.util.math.Vec2f;
 import net.minecraft.util.math.Vec3d;
