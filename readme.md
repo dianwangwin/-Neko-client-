@@ -10,4 +10,4 @@
 - rpai: rpai come back to tha monkey (gorillas know more java then him)
 - neko: da gamesense profesional coder and pro-gramer
 - _KA1 xannax dev & vulcan ;) (adds hwid lock)
-- ObsidianBreaker (perry but egirl)
+- ObsidianBreaker (perry but egirl) and smart too 
