@@ -80,7 +80,7 @@ public class NekoHax {
 
 		send_minecraft_log("initialising guis");
 
-		Display.setTitle("NekoClient v" + CLIENT_VERSION);
+		Display.setTitle("NekoClient" + CLIENT_VERSION);
 		click_gui = new GUI();
 		click_hud = new HUD();
 
