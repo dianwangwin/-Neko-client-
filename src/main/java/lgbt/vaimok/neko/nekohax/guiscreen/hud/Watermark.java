@@ -18,7 +18,7 @@ public class Watermark extends Pinnable {
 		int nl_b = NekoHax.get_setting_manager().get_setting_with_tag("HUD", "HUDStringsColorB").get_value(255);
 		int nl_a = NekoHax.get_setting_manager().get_setting_with_tag("HUD", "HUDStringsColorA").get_value(220);
 
-		String line = ChatFormatting.LIGHT_PURPLE + "NekoHax" + NekoHax.g + " v" + NekoHax.get_version();
+		String line = ChatFormatting.LIGHT_PURPLE + "NekoHax" + ChatFormatting.RESET + NekoHax.g + " v" + NekoHax.get_version();
 
 		create_line(line, this.docking(1, line), 2, nl_r, nl_g, nl_b, nl_a);
 
