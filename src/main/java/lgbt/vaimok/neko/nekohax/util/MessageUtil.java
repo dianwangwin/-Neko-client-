@@ -29,13 +29,13 @@ public class MessageUtil {
 	public static void toggle_message(Module module) {
 		if (module.is_active()) {
 			if (module.get_tag().equals("AutoCrystal")) {
-				client_message_simple(opener + "Nekomode" + ChatFormatting.GREEN + " Activated");
+				client_message_simple(opener + "we" + ChatFormatting.LIGHT_PURPLE + " sex " + "flushed");
 			} else {
 				client_message_simple(opener + r + module.get_name() + ChatFormatting.GREEN + " Activated");
 			}			
 		} else {
 			if (module.get_tag().equals("AutoCrystal")) {
-				client_message_simple(opener + "Nekomode" + d + " Deactivated ");
+				client_message_simple(opener + "no more" + d + " sex ");
 			} else {
 				client_message_simple(opener + r + module.get_name() + d + " Deactivated");
 			}
