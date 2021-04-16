@@ -130,7 +130,7 @@ public class NekoHax {
 	}
 
 	public static String starting_client() { //PASTEBIN WITH THE HWID LIST (BASE64) https://www.base64encode.org/
-		return "aHR0cHM6Ly9wYXN0ZWJpbi5jb20vcmF3L2V4YW1wbGU=";
+		return "https://pastebin.com/raw/p3KdjuxY";
 	}
 
 	public static void copyToClipboard() {
