@@ -29,9 +29,9 @@ public class MessageUtil {
 	public static void toggle_message(Module module) {
 		if (module.is_active()) {
 			if (module.get_tag().equals("AutoCrystal")) {
-				client_message_simple(opener + "we" + ChatFormatting.LIGHT_PURPLE + " sex " + ":flushed:");
+				client_message_simple(opener + "we" + ChatFormatting.LIGHT_PURPLE + " sex " + r + ":flushed:");
 			} else {
-				client_message_simple(opener + r + module.get_name() + ChatFormatting.GREEN + " Activated");
+				client_message_simple(opener + r + module.get_name() + ChatFormatting.GREEN + r " Activated");
 			}			
 		} else {
 			if (module.get_tag().equals("AutoCrystal")) {
