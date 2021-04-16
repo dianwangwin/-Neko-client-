@@ -19,7 +19,7 @@ buildscript {
 		}
 	}
 
-
+apply plugin: "java"
 apply plugin: "net.minecraftforge.gradle.forge";
 apply plugin: "com.github.johnrengelman.shadow";
 apply plugin: "org.spongepowered.mixin"
@@ -30,7 +30,7 @@ group            project.client_group
 minecraft {
 	version  = "1.12.2-14.23.5.2768"
 	runDir   = "run"
-	coreMod  = "me.neko.wurstplus.mixins.WurstplusMixinLoader"
+	coreMod  = "lgbt.vaimok.neko.mixins.MixinLoader"
 	mappings = "snapshot_20180814"
 	makeObfSourceJar = true
 }
@@ -112,7 +112,7 @@ jar {
 		attributes (
 			"FMLCorePluginContainsFMLMod" : "true",
 			"ForceLoadAsMod"              : "true",
-			"FMLCorePlugin"               : "me.neko.wurstplus.mixins.WurstplusMixinLoader",
+			"FMLCorePlugin"               : "lgbt.vaimok.neko.mixins.MixinLoader",
 			"MixinConfigs"                : "mixins.nekohax.json",
 			"tweakClass"                  : "org.spongepowered.asm.launch.MixinTweaker",
 			"TweakOrder"                  : 0,
