@@ -63,14 +63,14 @@ public class PlayerPacketManager {
         if (player != null && rawPacket instanceof CPacketPlayer) {
             CPacketPlayer packet = (CPacketPlayer) rawPacket;
 
-            if (packet.moving) {
-                serverSidePosition = new Vec3d(packet.x, packet.y, packet.z);
-            }
+           // if (packet.moving) {
+           //     serverSidePosition = new Vec3d(packet.x, packet.y, packet.z);
+           // }
 
-            if (packet.rotate) {
-                serverSideRotation = new Vec2f(packet.yaw, packet.pitch);
-                player.rotationYawHead = packet.yaw;
-            }
+           // if (packet.rotate) {
+            //    serverSideRotation = new Vec2f(packet.yaw, packet.pitch);
+             //   player.rotationYawHead = packet.yaw;
+            //}
         }
     }, EventPriority.LOWEST);
 
