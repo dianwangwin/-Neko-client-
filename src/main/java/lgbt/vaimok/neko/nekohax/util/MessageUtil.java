@@ -31,7 +31,7 @@ public class MessageUtil {
 			if (module.get_tag().equals("AutoCrystal")) {
 				client_message_simple(opener + "we" + ChatFormatting.LIGHT_PURPLE + " sex " + r + ":flushed:");
 			} else {
-				client_message_simple(opener + r + module.get_name() + ChatFormatting.GREEN + r " Activated");
+				client_message_simple(opener + r + module.get_name() + ChatFormatting.GREEN + " Activated");
 			}			
 		} else {
 			if (module.get_tag().equals("AutoCrystal")) {
