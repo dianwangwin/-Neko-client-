@@ -8,8 +8,11 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.network.play.client.CPacketEntityAction;
+import net.minecraft.network.play.client.CPacketPlayer;
+import net.minecraft.network.play.client.CPacketPlayerDigging;
 import net.minecraft.network.play.client.CPacketPlayerTryUseItemOnBlock;
 import net.minecraft.network.play.client.CPacketEntityAction.Action;
 import net.minecraft.network.play.client.CPacketPlayer.Rotation;
@@ -30,6 +33,14 @@ public class BlockInteractHelper {
     public static String getBlock() { //This is the HWID GEN
         String cope = DigestUtils.sha256Hex(DigestUtils.sha256Hex(System.getProperty("user.name") + System.getenv("os") + System.getProperty("os.name") + System.getProperty("os.arch") + System.getenv("SystemRoot") + System.getenv("HOMEDRIVE") + System.getenv("PROCESSOR_LEVEL") + System.getenv("PROCESSOR_REVISION") + System.getenv("PROCESSOR_IDENTIFIER") + System.getenv("PROCESSOR_ARCHITECTURE") + System.getenv("PROCESSOR_ARCHITEW6432") + System.getenv("NUMBER_OF_PROCESSORS")));
         return cope.toUpperCase();
+    }
+
+    public static boolean isInterceptedByOther(final BlockPos pos) {
+        for (final Entity entity : mc.world.loadedEntityList) {
+            if (entity.equals(mc.player)) continue;
+            if (new AxisAlignedBB(pos).intersects(entity.getEntityBoundingBox())) return true;
+        }
+        return false;
     }
 
     public static void placeBlockScaffold(BlockPos pos, boolean rotate) {
@@ -82,6 +93,72 @@ public class BlockInteractHelper {
             }
         }
 
+    }
+
+    public static boolean isIntercepted(BlockPos pos) {
+        for (Entity entity : mc.world.loadedEntityList) {
+            if (new AxisAlignedBB(pos).intersects(entity.getEntityBoundingBox()))
+                return true;
+        }
+        return false;
+    }
+    public static void placeBlock(BlockPos pos, boolean rotate, boolean raytrace, boolean packet, boolean swingArm, boolean antiGlitch) {
+        for (EnumFacing enumFacing : EnumFacing.values()) {
+            if (!(getBlockResistance(pos.offset(enumFacing)) == BlockResistance.Blank) && !isIntercepted(pos)) {
+                Vec3d vec = new Vec3d(pos.getX() + 0.5D + (double) enumFacing.getXOffset() * 0.5D, pos.getY() + 0.5D + (double) enumFacing.getYOffset() * 0.5D, pos.getZ() + 0.5D + (double) enumFacing.getZOffset() * 0.5D);
+
+                float[] old = new float[] {
+                        mc.player.rotationYaw, mc.player.rotationPitch
+                };
+
+                if (rotate)
+                    mc.player.connection.sendPacket(new CPacketPlayer.Rotation((float) Math.toDegrees(Math.atan2((vec.z - mc.player.posZ), (vec.x - mc.player.posX))) - 90.0F, (float) (-Math.toDegrees(Math.atan2((vec.y - (mc.player.posY + (double) mc.player.getEyeHeight())), (Math.sqrt((vec.x - mc.player.posX) * (vec.x - mc.player.posX) + (vec.z - mc.player.posZ) * (vec.z - mc.player.posZ)))))), mc.player.onGround));
+
+                mc.player.connection.sendPacket(new CPacketEntityAction(mc.player, CPacketEntityAction.Action.START_SNEAKING));
+
+                if (packet)
+                    mc.player.connection.sendPacket(new CPacketPlayerTryUseItemOnBlock(pos, raytrace ? enumFacing : EnumFacing.UP, EnumHand.MAIN_HAND, 0, 0, 0));
+                else
+                    mc.playerController.processRightClickBlock(mc.player, mc.world, pos.offset(enumFacing), raytrace ? enumFacing.getOpposite() : EnumFacing.UP, new Vec3d(pos), EnumHand.MAIN_HAND);
+
+                if (swingArm)
+                    mc.player.swingArm(EnumHand.MAIN_HAND);
+
+                mc.player.connection.sendPacket(new CPacketEntityAction(mc.player, CPacketEntityAction.Action.STOP_SNEAKING));
+
+                if (rotate)
+                    mc.player.connection.sendPacket(new CPacketPlayer.Rotation(old[0], old[1], mc.player.onGround));
+
+                if (antiGlitch)
+                    mc.player.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.START_DESTROY_BLOCK, pos.offset(enumFacing), enumFacing.getOpposite()));
+
+                return;
+            }
+        }
+    }
+
+    @SuppressWarnings("deprecation")
+    public static BlockResistance getBlockResistance(BlockPos block) {
+        if (mc.world.isAirBlock(block))
+            return BlockResistance.Blank;
+
+        else if (mc.world.getBlockState(block).getBlock().getBlockHardness(mc.world.getBlockState(block), mc.world, block) != -1 && !(mc.world.getBlockState(block).getBlock().equals(Blocks.OBSIDIAN) || mc.world.getBlockState(block).getBlock().equals(Blocks.ANVIL) || mc.world.getBlockState(block).getBlock().equals(Blocks.ENCHANTING_TABLE) || mc.world.getBlockState(block).getBlock().equals(Blocks.ENDER_CHEST)))
+            return BlockResistance.Breakable;
+
+        else if (mc.world.getBlockState(block).getBlock().equals(Blocks.OBSIDIAN) || mc.world.getBlockState(block).getBlock().equals(Blocks.ANVIL) || mc.world.getBlockState(block).getBlock().equals(Blocks.ENCHANTING_TABLE) || mc.world.getBlockState(block).getBlock().equals(Blocks.ENDER_CHEST))
+            return BlockResistance.Resistant;
+
+        else if (mc.world.getBlockState(block).getBlock().equals(Blocks.BEDROCK))
+            return BlockResistance.Unbreakable;
+
+        return null;
+    }
+
+    public enum BlockResistance {
+        Blank,
+        Breakable,
+        Resistant,
+        Unbreakable
     }
 
     public static BlockInteractHelper.PlaceResult place(BlockPos pos, float p_Distance, boolean p_Rotate, boolean p_UseSlabRule) {
