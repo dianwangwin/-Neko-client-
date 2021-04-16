@@ -64,7 +64,7 @@ public class WurstplusAutoCrystal extends Module {
     Setting min_player_break = create("Min Enemy Break", "CaMinEnemyBreak", 6, 0, 20);
     Setting max_self_damage = create("Max Self Damage", "CaMaxSelfDamage", 6, 0, 20);
 
-    Setting rotate_mode = create("Rotate", "CaRotateMode", "Good", combobox("Off", "Old", "Const", "Good"));
+    Setting rotate_mode = create("Rotate", "CaRotateMode", "Silent", combobox("Off", "Old", "Const", "Good","Silent"));
     Setting raytrace = create("Raytrace", "CaRaytrace", false);
 
     Setting auto_switch = create("Auto Switch", "CaAutoSwitch", true);

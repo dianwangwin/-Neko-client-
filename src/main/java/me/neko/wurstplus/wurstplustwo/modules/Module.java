@@ -22,6 +22,7 @@ public class Module implements Listenable {
 	public String description;
 
 	public int bind;
+	public int priority;
 
 	public boolean state_module;
 	public boolean toggle_message;
@@ -37,6 +38,18 @@ public class Module implements Listenable {
 		this.toggle_message = true;
 		this.widget_usage   = false;
 		this.category 		= category;
+		this.priority       = 0;
+	}
+
+	public Module(Category category,int priority){
+		this.name           = "";
+		this.tag            = "";
+		this.description    = "";
+		this.bind           = -1;
+		this.toggle_message = true;
+		this.widget_usage   = false;
+		this.category 		= category;
+		this.priority       = priority;
 	}
 
 	public void set_bind(int key) {
@@ -194,4 +207,8 @@ public class Module implements Listenable {
 	}
 
 	public void on_render_model(final WurstplusEventRenderEntityModel event) {}
+
+	public int getPriority() {
+		return priority;
+	}
 }
