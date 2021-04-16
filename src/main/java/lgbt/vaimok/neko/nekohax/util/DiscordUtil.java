@@ -1,8 +1,8 @@
 package lgbt.vaimok.neko.nekohax.util;
 
 import club.minnced.discord.rpc.DiscordEventHandlers;
-import club.minnced.discord.rpc.DiscordRichPresence;
 import club.minnced.discord.rpc.DiscordRPC;
+import club.minnced.discord.rpc.DiscordRichPresence;
 import lgbt.vaimok.neko.nekohax.NekoHax;
 import net.minecraft.client.Minecraft;
 

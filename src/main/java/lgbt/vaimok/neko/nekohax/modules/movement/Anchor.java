@@ -1,7 +1,7 @@
 package lgbt.vaimok.neko.nekohax.modules.movement;
 
-import lgbt.vaimok.neko.nekohax.guiscreen.settings.Setting;
 import lgbt.vaimok.neko.nekohax.event.events.EventMotionUpdate;
+import lgbt.vaimok.neko.nekohax.guiscreen.settings.Setting;
 import lgbt.vaimok.neko.nekohax.modules.Category;
 import lgbt.vaimok.neko.nekohax.modules.Module;
 import me.zero.alpine.fork.listener.EventHandler;

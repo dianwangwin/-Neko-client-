@@ -2,10 +2,10 @@ package lgbt.vaimok.neko.nekohax.manager;
 
 import com.google.common.reflect.TypeToken;
 import com.google.gson.*;
+import lgbt.vaimok.neko.nekohax.NekoHax;
 import lgbt.vaimok.neko.nekohax.guiscreen.render.components.Frame;
 import lgbt.vaimok.neko.nekohax.guiscreen.render.pinnables.Pinnable;
 import lgbt.vaimok.neko.nekohax.guiscreen.settings.Setting;
-import lgbt.vaimok.neko.nekohax.NekoHax;
 import lgbt.vaimok.neko.nekohax.modules.Module;
 import lgbt.vaimok.neko.nekohax.modules.exploit.InstantBurrow;
 import lgbt.vaimok.neko.nekohax.util.*;

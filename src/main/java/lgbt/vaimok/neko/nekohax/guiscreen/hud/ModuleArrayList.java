@@ -1,9 +1,9 @@
 package lgbt.vaimok.neko.nekohax.guiscreen.hud;
 
 import com.google.common.collect.Lists;
+import lgbt.vaimok.neko.nekohax.NekoHax;
 import lgbt.vaimok.neko.nekohax.guiscreen.render.Draw;
 import lgbt.vaimok.neko.nekohax.guiscreen.render.pinnables.Pinnable;
-import lgbt.vaimok.neko.nekohax.NekoHax;
 import lgbt.vaimok.neko.nekohax.modules.Module;
 import lgbt.vaimok.neko.nekohax.util.DrawnUtil;
 import net.minecraft.util.math.MathHelper;

@@ -1,8 +1,8 @@
 package lgbt.vaimok.neko.nekohax.guiscreen.hud;
 
 
-import lgbt.vaimok.neko.nekohax.guiscreen.render.pinnables.Pinnable;
 import lgbt.vaimok.neko.nekohax.NekoHax;
+import lgbt.vaimok.neko.nekohax.guiscreen.render.pinnables.Pinnable;
 import lgbt.vaimok.neko.nekohax.util.TimeUtil;
 
 public class Time extends Pinnable {

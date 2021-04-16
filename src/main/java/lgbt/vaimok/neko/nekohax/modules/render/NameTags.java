@@ -1,15 +1,15 @@
 package lgbt.vaimok.neko.nekohax.modules.render;
 
 import lgbt.vaimok.neko.nekohax.event.events.EventRender;
+import lgbt.vaimok.neko.nekohax.event.events.EventRenderName;
 import lgbt.vaimok.neko.nekohax.guiscreen.settings.Setting;
 import lgbt.vaimok.neko.nekohax.modules.Category;
 import lgbt.vaimok.neko.nekohax.modules.Module;
+import lgbt.vaimok.neko.nekohax.modules.chat.TotemPopCounter;
 import lgbt.vaimok.neko.nekohax.util.DamageUtil;
 import lgbt.vaimok.neko.nekohax.util.EnemyUtil;
 import lgbt.vaimok.neko.nekohax.util.FriendUtil;
 import lgbt.vaimok.neko.nekohax.util.RenderUtil;
-import lgbt.vaimok.neko.nekohax.event.events.EventRenderName;
-import lgbt.vaimok.neko.nekohax.modules.chat.TotemPopCounter;
 import me.zero.alpine.fork.listener.EventHandler;
 import me.zero.alpine.fork.listener.Listener;
 import net.minecraft.client.renderer.GlStateManager;

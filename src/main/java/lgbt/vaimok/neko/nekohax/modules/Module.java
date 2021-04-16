@@ -1,10 +1,10 @@
 package lgbt.vaimok.neko.nekohax.modules;
 
 import lgbt.vaimok.neko.nekohax.NekoHax;
-import lgbt.vaimok.neko.nekohax.guiscreen.settings.Setting;
 import lgbt.vaimok.neko.nekohax.event.EventBusTwo;
 import lgbt.vaimok.neko.nekohax.event.events.EventRender;
 import lgbt.vaimok.neko.nekohax.event.events.EventRenderEntityModel;
+import lgbt.vaimok.neko.nekohax.guiscreen.settings.Setting;
 import lgbt.vaimok.neko.nekohax.util.MessageUtil;
 import me.zero.alpine.fork.listener.Listenable;
 import net.minecraft.client.Minecraft;
@@ -22,6 +22,7 @@ public class Module implements Listenable {
 	public String description;
 
 	public int bind;
+	public int priority;
 
 	public boolean state_module;
 	public boolean toggle_message;
@@ -37,6 +38,18 @@ public class Module implements Listenable {
 		this.toggle_message = true;
 		this.widget_usage   = false;
 		this.category 		= category;
+		this.priority       = 0;
+	}
+
+	public Module(Category category,int priority){
+		this.name           = "";
+		this.tag            = "";
+		this.description    = "";
+		this.bind           = -1;
+		this.toggle_message = true;
+		this.widget_usage   = false;
+		this.category 		= category;
+		this.priority       = priority;
 	}
 
 	public void set_bind(int key) {
@@ -193,5 +206,11 @@ public class Module implements Listenable {
 		return null;
 	}
 
+
+	public int getPriority() {
+		return priority;
+	}
+
 	public void on_render_model(final EventRenderEntityModel event) {}
+
 }

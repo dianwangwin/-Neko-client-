@@ -1,8 +1,8 @@
 package lgbt.vaimok.neko.nekohax.modules.combat;
 
 
-import lgbt.vaimok.neko.nekohax.guiscreen.settings.Setting;
 import lgbt.vaimok.neko.nekohax.NekoHax;
+import lgbt.vaimok.neko.nekohax.guiscreen.settings.Setting;
 import lgbt.vaimok.neko.nekohax.modules.Category;
 import lgbt.vaimok.neko.nekohax.modules.Module;
 import lgbt.vaimok.neko.nekohax.util.FriendUtil;

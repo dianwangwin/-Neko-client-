@@ -1,8 +1,8 @@
 package lgbt.vaimok.neko.nekohax.command.commands;
 
+import lgbt.vaimok.neko.nekohax.NekoHax;
 import lgbt.vaimok.neko.nekohax.command.Command;
 import lgbt.vaimok.neko.nekohax.manager.CommandManager;
-import lgbt.vaimok.neko.nekohax.NekoHax;
 import lgbt.vaimok.neko.nekohax.modules.Module;
 import lgbt.vaimok.neko.nekohax.util.MessageUtil;
 

@@ -1,8 +1,8 @@
 package lgbt.vaimok.neko.nekohax.guiscreen;
 
+import lgbt.vaimok.neko.nekohax.NekoHax;
 import lgbt.vaimok.neko.nekohax.guiscreen.render.pinnables.Frame;
 import lgbt.vaimok.neko.nekohax.guiscreen.render.pinnables.PinnableButton;
-import lgbt.vaimok.neko.nekohax.NekoHax;
 import net.minecraft.client.gui.GuiScreen;
 
 

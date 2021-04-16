@@ -1,8 +1,8 @@
 package lgbt.vaimok.neko.nekohax.guiscreen.hud;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
-import lgbt.vaimok.neko.nekohax.guiscreen.render.pinnables.Pinnable;
 import lgbt.vaimok.neko.nekohax.NekoHax;
+import lgbt.vaimok.neko.nekohax.guiscreen.render.pinnables.Pinnable;
 import net.minecraft.util.math.MathHelper;
 
 public class Direction extends Pinnable {

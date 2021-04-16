@@ -1,9 +1,9 @@
 package lgbt.vaimok.neko.nekohax.guiscreen.render.components;
 
+import lgbt.vaimok.neko.nekohax.NekoHax;
 import lgbt.vaimok.neko.nekohax.guiscreen.render.Draw;
 import lgbt.vaimok.neko.nekohax.guiscreen.render.components.widgets.*;
 import lgbt.vaimok.neko.nekohax.guiscreen.settings.Setting;
-import lgbt.vaimok.neko.nekohax.NekoHax;
 import lgbt.vaimok.neko.nekohax.modules.Module;
 
 import java.util.ArrayList;

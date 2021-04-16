@@ -6,8 +6,13 @@
 	"mcversion"    : "1.12.2-14.23.5.2772",
 	"url"          : "https://discord.gg/fTdrNpyzsX",
 	"updateUrl"    : "https://discord.gg/fTdrNpyzsX",
+<<<<<<< HEAD
+	"authorList"   : ["Vaimok, rTe, Profkambing, ObsidianBreaker and Perry"],
+	"credits"      : "Vaimok, rTe, Profkambing and Perry",
+=======
 	"authorList"   : ["Vaimok, rTe, Profkambing, Perry and ObsidianBreaker"],
 	"credits"      : "Vaimok, rTe, Profkambing, Perry and ObsidianBreaker",
+>>>>>>> a08df728e3a6dcb1ef05fbf92e65dbc8a8858e17
 	"logoFile"     : "nekohax.png",
 	"screenshots"  : [],
 	"dependencies" : []

@@ -1,14 +1,10 @@
 package lgbt.vaimok.neko.nekohax.modules.combat;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import lgbt.vaimok.neko.nekohax.guiscreen.settings.Setting;
-import lgbt.vaimok.neko.nekohax.turok.draw.RenderHelp;
 import lgbt.vaimok.neko.nekohax.event.events.EventRender;
+import lgbt.vaimok.neko.nekohax.guiscreen.settings.Setting;
 import lgbt.vaimok.neko.nekohax.modules.Category;
 import lgbt.vaimok.neko.nekohax.modules.Module;
+import lgbt.vaimok.neko.nekohax.turok.draw.RenderHelp;
 import lgbt.vaimok.neko.nekohax.util.BlockInteractHelper;
 import lgbt.vaimok.neko.nekohax.util.BlockUtil;
 import lgbt.vaimok.neko.nekohax.util.FriendUtil;
@@ -22,6 +18,10 @@ import net.minecraft.network.play.client.CPacketEntityAction;
 import net.minecraft.network.play.client.CPacketEntityAction.Action;
 import net.minecraft.network.play.client.CPacketPlayer.Rotation;
 import net.minecraft.util.math.BlockPos;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class BedAura extends Module {
     Setting delay = this.create("Delay", "BedAuraDelay", 6, 0, 20);

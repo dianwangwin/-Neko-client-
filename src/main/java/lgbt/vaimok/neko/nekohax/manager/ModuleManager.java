@@ -1,19 +1,19 @@
 package lgbt.vaimok.neko.nekohax.manager;
 
-import lgbt.vaimok.neko.nekohax.modules.chat.*;
-import lgbt.vaimok.neko.nekohax.modules.exploit.*;
-import lgbt.vaimok.neko.nekohax.modules.movement.*;
 import lgbt.vaimok.neko.nekohax.NekoHax;
-import lgbt.vaimok.neko.nekohax.modules.combat.*;
-import lgbt.vaimok.neko.nekohax.modules.misc.*;
-import lgbt.vaimok.neko.nekohax.modules.render.*;
-import lgbt.vaimok.neko.nekohax.turok.draw.RenderHelp;
 import lgbt.vaimok.neko.nekohax.event.events.EventRender;
 import lgbt.vaimok.neko.nekohax.modules.Category;
+import lgbt.vaimok.neko.nekohax.modules.Module;
+import lgbt.vaimok.neko.nekohax.modules.chat.*;
 import lgbt.vaimok.neko.nekohax.modules.client.ClickGUI;
 import lgbt.vaimok.neko.nekohax.modules.client.ClickHUD;
-import lgbt.vaimok.neko.nekohax.modules.Module;
 import lgbt.vaimok.neko.nekohax.modules.client.RichPresence;
+import lgbt.vaimok.neko.nekohax.modules.combat.*;
+import lgbt.vaimok.neko.nekohax.modules.exploit.*;
+import lgbt.vaimok.neko.nekohax.modules.misc.*;
+import lgbt.vaimok.neko.nekohax.modules.movement.*;
+import lgbt.vaimok.neko.nekohax.modules.render.*;
+import lgbt.vaimok.neko.nekohax.turok.draw.RenderHelp;
 import lgbt.vaimok.neko.nekohax.util.MovementUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;

@@ -1,9 +1,9 @@
 package lgbt.vaimok.neko.nekohax.modules.chat;
 
-import java.util.Random;
-
 import lgbt.vaimok.neko.nekohax.modules.Category;
 import lgbt.vaimok.neko.nekohax.modules.Module;
+
+import java.util.Random;
 
 public class AutoExcuse extends Module
 {

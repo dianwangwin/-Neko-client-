@@ -1,7 +1,7 @@
 package lgbt.vaimok.neko.nekohax.guiscreen.render.pinnables;
 
-import lgbt.vaimok.neko.nekohax.guiscreen.render.Draw;
 import lgbt.vaimok.neko.nekohax.NekoHax;
+import lgbt.vaimok.neko.nekohax.guiscreen.render.Draw;
 import net.minecraft.client.Minecraft;
 
 import java.awt.*;

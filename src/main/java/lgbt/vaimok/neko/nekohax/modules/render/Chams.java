@@ -1,8 +1,8 @@
 package lgbt.vaimok.neko.nekohax.modules.render;
 
-import lgbt.vaimok.neko.nekohax.guiscreen.settings.Setting;
 import lgbt.vaimok.neko.nekohax.event.events.EventRender;
 import lgbt.vaimok.neko.nekohax.event.events.EventRenderEntityModel;
+import lgbt.vaimok.neko.nekohax.guiscreen.settings.Setting;
 import lgbt.vaimok.neko.nekohax.modules.Category;
 import lgbt.vaimok.neko.nekohax.modules.Module;
 import lgbt.vaimok.neko.nekohax.util.EntityUtil;

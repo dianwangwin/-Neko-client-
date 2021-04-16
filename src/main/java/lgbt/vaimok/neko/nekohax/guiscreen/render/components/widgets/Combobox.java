@@ -1,11 +1,11 @@
 package lgbt.vaimok.neko.nekohax.guiscreen.render.components.widgets;
 
-import lgbt.vaimok.neko.nekohax.guiscreen.render.components.AbstractWidget;
-import lgbt.vaimok.neko.nekohax.guiscreen.render.components.Frame;
-import lgbt.vaimok.neko.nekohax.guiscreen.settings.Setting;
 import lgbt.vaimok.neko.nekohax.NekoHax;
 import lgbt.vaimok.neko.nekohax.guiscreen.render.Draw;
+import lgbt.vaimok.neko.nekohax.guiscreen.render.components.AbstractWidget;
+import lgbt.vaimok.neko.nekohax.guiscreen.render.components.Frame;
 import lgbt.vaimok.neko.nekohax.guiscreen.render.components.ModuleButton;
+import lgbt.vaimok.neko.nekohax.guiscreen.settings.Setting;
 
 import java.util.ArrayList;
 

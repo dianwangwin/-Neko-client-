@@ -1,9 +1,9 @@
 package lgbt.vaimok.neko.mixins;
 
 import lgbt.vaimok.neko.nekohax.NekoHax;
-import lgbt.vaimok.neko.nekohax.event.events.EventDamageBlock;
 import lgbt.vaimok.neko.nekohax.event.EventBusTwo;
 import lgbt.vaimok.neko.nekohax.event.events.EventBlock;
+import lgbt.vaimok.neko.nekohax.event.events.EventDamageBlock;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.multiplayer.PlayerControllerMP;
 import net.minecraft.entity.player.EntityPlayer;

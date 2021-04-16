@@ -1,7 +1,7 @@
 package lgbt.vaimok.neko.nekohax.guiscreen;
 
-import lgbt.vaimok.neko.nekohax.guiscreen.render.components.Frame;
 import lgbt.vaimok.neko.nekohax.NekoHax;
+import lgbt.vaimok.neko.nekohax.guiscreen.render.components.Frame;
 import lgbt.vaimok.neko.nekohax.modules.Category;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;

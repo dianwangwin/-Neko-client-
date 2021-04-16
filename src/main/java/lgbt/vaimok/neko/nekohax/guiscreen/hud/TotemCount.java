@@ -1,7 +1,7 @@
 package lgbt.vaimok.neko.nekohax.guiscreen.hud;
 
-import lgbt.vaimok.neko.nekohax.guiscreen.render.pinnables.Pinnable;
 import lgbt.vaimok.neko.nekohax.NekoHax;
+import lgbt.vaimok.neko.nekohax.guiscreen.render.pinnables.Pinnable;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.init.Items;
