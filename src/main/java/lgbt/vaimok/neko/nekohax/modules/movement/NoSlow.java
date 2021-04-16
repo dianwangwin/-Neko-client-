@@ -1,6 +1,6 @@
 package lgbt.vaimok.neko.nekohax.modules.movement;
 
-import lgbt.vaimok.neko.nekohax.event.WurstplusEventBus;
+import lgbt.vaimok.neko.nekohax.event.EventBusTwo;
 import lgbt.vaimok.neko.nekohax.modules.Category;
 import lgbt.vaimok.neko.nekohax.modules.Module;
 import me.zero.alpine.fork.listener.EventHandler;
@@ -31,10 +31,10 @@ public class NoSlow extends Module
     });
 
     public void onEnable(){
-        WurstplusEventBus.EVENT_BUS.subscribe(this);
+        EventBusTwo.EVENT_BUS.subscribe(this);
     }
 
     public void onDisable(){
-        WurstplusEventBus.EVENT_BUS.unsubscribe(this);
+        EventBusTwo.EVENT_BUS.unsubscribe(this);
     }
 }

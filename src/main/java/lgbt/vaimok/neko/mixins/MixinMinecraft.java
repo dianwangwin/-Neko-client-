@@ -1,8 +1,8 @@
 package lgbt.vaimok.neko.mixins;
 
 import lgbt.vaimok.neko.nekohax.NekoHax;
-import lgbt.vaimok.neko.nekohax.event.WurstplusEventBus;
-import lgbt.vaimok.neko.nekohax.event.events.WurstplusEventGUIScreen;
+import lgbt.vaimok.neko.nekohax.event.EventBusTwo;
+import lgbt.vaimok.neko.nekohax.event.events.EventGUIScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import org.spongepowered.asm.mixin.Mixin;
@@ -17,9 +17,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class MixinMinecraft {
 	@Inject(method = "displayGuiScreen", at = @At("HEAD"))
 	private void displayGuiScreen(GuiScreen guiScreenIn, CallbackInfo info) {
-		WurstplusEventGUIScreen guiscreen = new WurstplusEventGUIScreen(guiScreenIn);
+		EventGUIScreen guiscreen = new EventGUIScreen(guiScreenIn);
 
-		WurstplusEventBus.EVENT_BUS.post(guiscreen);
+		EventBusTwo.EVENT_BUS.post(guiscreen);
 	}
 
 	@Inject(method = "shutdown", at = @At("HEAD"))

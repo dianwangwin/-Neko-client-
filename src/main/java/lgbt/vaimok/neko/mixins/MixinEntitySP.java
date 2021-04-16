@@ -1,9 +1,9 @@
 package lgbt.vaimok.neko.mixins;
 
-import lgbt.vaimok.neko.nekohax.event.WurstplusEventBus;
-import lgbt.vaimok.neko.nekohax.event.events.WurstplusEventMotionUpdate;
-import lgbt.vaimok.neko.nekohax.event.events.WurstplusEventMove;
-import lgbt.vaimok.neko.nekohax.event.events.WurstplusEventSwing;
+import lgbt.vaimok.neko.nekohax.event.EventBusTwo;
+import lgbt.vaimok.neko.nekohax.event.events.EventMotionUpdate;
+import lgbt.vaimok.neko.nekohax.event.events.EventMove;
+import lgbt.vaimok.neko.nekohax.event.events.EventSwing;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.MoverType;
 import net.minecraft.util.EnumHand;
@@ -21,8 +21,8 @@ public class MixinEntitySP extends MixinEntity {
 	@Inject(method = "move", at = @At("HEAD"), cancellable = true)
 	private void move(MoverType type, double x, double y, double z, CallbackInfo info) {
 
-		WurstplusEventMove event = new WurstplusEventMove(type, x, y, z);
-		WurstplusEventBus.EVENT_BUS.post(event);
+		EventMove event = new EventMove(type, x, y, z);
+		EventBusTwo.EVENT_BUS.post(event);
 
 		if (event.isCancelled()) {
             super.move(type, event.get_x(), event.get_y(), event.get_z());
@@ -33,8 +33,8 @@ public class MixinEntitySP extends MixinEntity {
 	@Inject(method = "onUpdateWalkingPlayer", at = @At("HEAD"), cancellable = true)
     public void OnPreUpdateWalkingPlayer(CallbackInfo p_Info) {
 
-        WurstplusEventMotionUpdate l_Event = new WurstplusEventMotionUpdate(0);
-        WurstplusEventBus.EVENT_BUS.post(l_Event);
+        EventMotionUpdate l_Event = new EventMotionUpdate(0);
+        EventBusTwo.EVENT_BUS.post(l_Event);
         if (l_Event.isCancelled())
             p_Info.cancel();
 
@@ -43,8 +43,8 @@ public class MixinEntitySP extends MixinEntity {
     @Inject(method = "onUpdateWalkingPlayer", at = @At("RETURN"), cancellable = true)
     public void OnPostUpdateWalkingPlayer(CallbackInfo p_Info) {
 
-        WurstplusEventMotionUpdate l_Event = new WurstplusEventMotionUpdate(1);
-        WurstplusEventBus.EVENT_BUS.post(l_Event);
+        EventMotionUpdate l_Event = new EventMotionUpdate(1);
+        EventBusTwo.EVENT_BUS.post(l_Event);
         if (l_Event.isCancelled())
             p_Info.cancel();
 
@@ -53,8 +53,8 @@ public class MixinEntitySP extends MixinEntity {
     @Inject(method = "swingArm", at = @At("RETURN"), cancellable = true)
     public void swingArm(EnumHand p_Hand, CallbackInfo p_Info) {
 
-        WurstplusEventSwing l_Event = new WurstplusEventSwing(p_Hand);
-        WurstplusEventBus.EVENT_BUS.post(l_Event);
+        EventSwing l_Event = new EventSwing(p_Hand);
+        EventBusTwo.EVENT_BUS.post(l_Event);
         if (l_Event.isCancelled())
             p_Info.cancel();
 

@@ -1,7 +1,7 @@
 package lgbt.vaimok.neko.nekohax.modules.chat;
 
 import lgbt.vaimok.neko.nekohax.NekoHax;
-import lgbt.vaimok.neko.nekohax.event.events.WurstplusEventPacket;
+import lgbt.vaimok.neko.nekohax.event.events.EventPacket;
 import lgbt.vaimok.neko.nekohax.guiscreen.settings.Setting;
 import lgbt.vaimok.neko.nekohax.modules.Category;
 import lgbt.vaimok.neko.nekohax.modules.Module;
@@ -68,7 +68,7 @@ public class Announcer extends Module {
     private static float lostHealth;
 
     @EventHandler
-    private Listener<WurstplusEventPacket.ReceivePacket> receive_listener = new Listener<>(event -> {
+    private Listener<EventPacket.ReceivePacket> receive_listener = new Listener<>(event -> {
         if (mc.world == null) return;
 
         if (event.get_packet() instanceof SPacketUseBed) {
@@ -77,7 +77,7 @@ public class Announcer extends Module {
     });
 
     @EventHandler
-    private Listener<WurstplusEventPacket.SendPacket> send_listener = new Listener<>(event -> {
+    private Listener<EventPacket.SendPacket> send_listener = new Listener<>(event -> {
         if (mc.world == null) return;
 
         if (event.get_packet() instanceof CPacketPlayerDigging) {

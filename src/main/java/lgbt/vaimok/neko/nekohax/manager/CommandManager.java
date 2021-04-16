@@ -1,15 +1,15 @@
  package lgbt.vaimok.neko.nekohax.manager;
 
-import lgbt.vaimok.neko.nekohax.command.WurstplusCommands;
+import lgbt.vaimok.neko.nekohax.command.Commands;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextFormatting;
 
  public class CommandManager {
 
-	public static WurstplusCommands command_list;
+	public static Commands command_list;
 
 	public CommandManager() {
-		command_list = new WurstplusCommands(new Style().setColor(TextFormatting.BLUE));
+		command_list = new Commands(new Style().setColor(TextFormatting.BLUE));
 	}
 
 	public static void set_prefix(String new_prefix) {

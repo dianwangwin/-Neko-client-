@@ -1,8 +1,8 @@
 package lgbt.vaimok.neko.mixins;
 
 import io.netty.channel.ChannelHandlerContext;
-import lgbt.vaimok.neko.nekohax.event.WurstplusEventBus;
-import lgbt.vaimok.neko.nekohax.event.events.WurstplusEventPacket;
+import lgbt.vaimok.neko.nekohax.event.EventBusTwo;
+import lgbt.vaimok.neko.nekohax.event.events.EventPacket;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import org.spongepowered.asm.mixin.Mixin;
@@ -18,9 +18,9 @@ public class MixinNetworkManager {
 	// Receive packet.
 	@Inject(method = "channelRead0", at = @At("HEAD"), cancellable = true)
 	private void receive(ChannelHandlerContext context, Packet<?> packet, CallbackInfo callback) {
-		WurstplusEventPacket event_packet = new WurstplusEventPacket.ReceivePacket(packet);
+		EventPacket event_packet = new EventPacket.ReceivePacket(packet);
 
-		WurstplusEventBus.EVENT_BUS.post(event_packet);
+		EventBusTwo.EVENT_BUS.post(event_packet);
 
 		if (event_packet.isCancelled()) {
 			callback.cancel();
@@ -30,9 +30,9 @@ public class MixinNetworkManager {
 	// Send packet.
 	@Inject(method = "sendPacket(Lnet/minecraft/network/Packet;)V", at = @At("HEAD"), cancellable = true)
 	private void send(Packet<?> packet, CallbackInfo callback) {
-		WurstplusEventPacket event_packet = new WurstplusEventPacket.SendPacket(packet);
+		EventPacket event_packet = new EventPacket.SendPacket(packet);
 
-		WurstplusEventBus.EVENT_BUS.post(event_packet);
+		EventBusTwo.EVENT_BUS.post(event_packet);
 
 		if (event_packet.isCancelled()) {
 			callback.cancel();

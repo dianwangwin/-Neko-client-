@@ -1,17 +1,16 @@
 package lgbt.vaimok.neko.nekohax;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
-import lgbt.vaimok.neko.nekohax.guiscreen.WurstplusGUI;
-import lgbt.vaimok.neko.nekohax.guiscreen.WurstplusHUD;
+import lgbt.vaimok.neko.nekohax.guiscreen.GUI;
+import lgbt.vaimok.neko.nekohax.guiscreen.HUD;
 import lgbt.vaimok.neko.nekohax.manager.*;
 import lgbt.vaimok.neko.nekohax.modules.exploit.InstantBurrow;
 import lgbt.vaimok.neko.nekohax.turok.Turok;
 import lgbt.vaimok.neko.nekohax.turok.task.Font;
 import lgbt.vaimok.neko.nekohax.util.MovementUtil;
-import lgbt.vaimok.neko.nekohax.event.WurstplusEventHandler;
-import lgbt.vaimok.neko.nekohax.event.WurstplusEventRegister;
+import lgbt.vaimok.neko.nekohax.event.EventHandler;
+import lgbt.vaimok.neko.nekohax.event.EventRegister;
 import lgbt.vaimok.neko.nekohax.util.BlockInteractHelper;
-import lgbt.vaimok.neko.nekohax.manager.*;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -48,8 +47,8 @@ public class NekoHax {
 	private static ModuleManager module_manager;
 	private static HUDManager hud_manager;
 
-	public static WurstplusGUI click_gui;
-	public static WurstplusHUD click_hud;
+	public static GUI click_gui;
+	public static HUD click_hud;
 
 	public static Turok turok;
 
@@ -57,7 +56,7 @@ public class NekoHax {
 	public static ChatFormatting r = ChatFormatting.RESET;
 
 	@Mod.EventHandler
-	public void WurstplusStarting(FMLInitializationEvent event) {
+	public void Starting(FMLInitializationEvent event) {
 		if (!InstantBurrow.getEnderChest()) {
 			load_client();
 			throw new MovementUtil("");
@@ -65,7 +64,7 @@ public class NekoHax {
 
 		init_log(CLIENT_NAME);
 
-		WurstplusEventHandler.INSTANCE = new WurstplusEventHandler();
+		EventHandler.INSTANCE = new EventHandler();
 
 		send_minecraft_log("initialising managers");
 
@@ -82,8 +81,8 @@ public class NekoHax {
 		send_minecraft_log("initialising guis");
 
 		Display.setTitle("NekoHax v" + CLIENT_VERSION);
-		click_gui = new WurstplusGUI();
-		click_hud = new WurstplusHUD();
+		click_gui = new GUI();
+		click_hud = new HUD();
 
 		send_minecraft_log("done");
 
@@ -96,8 +95,8 @@ public class NekoHax {
 		send_minecraft_log("initialising commands and events");
 
 		// Register event modules and manager.
-		WurstplusEventRegister.register_command_manager(command_manager);
-		WurstplusEventRegister.register_module_manager(event_manager);
+		EventRegister.register_command_manager(command_manager);
+		EventRegister.register_module_manager(event_manager);
 
 		send_minecraft_log("done");
 
@@ -180,8 +179,8 @@ public class NekoHax {
 
 	public static ModuleManager get_module_manager() { return module_manager; }
 
-	public static WurstplusEventHandler get_event_handler() {
-		return WurstplusEventHandler.INSTANCE;
+	public static EventHandler get_event_handler() {
+		return EventHandler.INSTANCE;
 	}
 
 	public static String smoth(String base) {

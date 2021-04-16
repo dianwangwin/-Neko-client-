@@ -1,7 +1,7 @@
 package lgbt.vaimok.neko.nekohax.modules.chat;
 
 import lgbt.vaimok.neko.nekohax.NekoHax;
-import lgbt.vaimok.neko.nekohax.event.events.WurstplusEventPacket;
+import lgbt.vaimok.neko.nekohax.event.events.EventPacket;
 import lgbt.vaimok.neko.nekohax.guiscreen.settings.Setting;
 import lgbt.vaimok.neko.nekohax.modules.Category;
 import lgbt.vaimok.neko.nekohax.modules.Module;
@@ -59,7 +59,7 @@ public class ChatSuffix extends Module {
 	};
 
 	@EventHandler
-	private Listener<WurstplusEventPacket.SendPacket> listener = new Listener<>(event -> {
+	private Listener<EventPacket.SendPacket> listener = new Listener<>(event -> {
 		// If not be the CPacketChatMessage return.
 		if (!(event.get_packet() instanceof CPacketChatMessage)) {
 			return;
@@ -111,7 +111,7 @@ public class ChatSuffix extends Module {
 				// Create first the string builder.
 				StringBuilder suffix_with_randoms = new StringBuilder();
 
-				// Convert the base using the TravisFont.
+				// Convert the base using the CustomFont.
 				suffix_with_randoms.append(convert_base(random_string(random_client_name)));
 				suffix_with_randoms.append(convert_base(random_string(random_client_finish)));
 
@@ -133,7 +133,7 @@ public class ChatSuffix extends Module {
 		return list[new Random().nextInt(list.length)];
 	}
 
-	// Convert the base using the TravisFont.
+	// Convert the base using the CustomFont.
 	public String convert_base(String base) {
 		return NekoHax.smoth(base);
 	}

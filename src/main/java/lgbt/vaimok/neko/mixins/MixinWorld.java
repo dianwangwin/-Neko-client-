@@ -1,7 +1,7 @@
 package lgbt.vaimok.neko.mixins;
 
-import lgbt.vaimok.neko.nekohax.event.events.WurstplusEventEntityRemoved;
-import lgbt.vaimok.neko.nekohax.event.WurstplusEventBus;
+import lgbt.vaimok.neko.nekohax.event.events.EventEntityRemoved;
+import lgbt.vaimok.neko.nekohax.event.EventBusTwo;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -15,9 +15,9 @@ public class MixinWorld {
     @Inject(method = "onEntityRemoved", at = @At("HEAD"), cancellable = true)
     public void onEntityRemoved(Entity event_packet, CallbackInfo p_Info)
     {
-        WurstplusEventEntityRemoved l_Event = new WurstplusEventEntityRemoved(event_packet);
+        EventEntityRemoved l_Event = new EventEntityRemoved(event_packet);
 
-        WurstplusEventBus.EVENT_BUS.post(l_Event);
+        EventBusTwo.EVENT_BUS.post(l_Event);
 
     }
 

@@ -1,6 +1,6 @@
 package lgbt.vaimok.neko.nekohax.modules.chat;
 
-import lgbt.vaimok.neko.nekohax.event.events.WurstplusEventPacket;
+import lgbt.vaimok.neko.nekohax.event.events.EventPacket;
 import lgbt.vaimok.neko.nekohax.guiscreen.settings.Setting;
 import lgbt.vaimok.neko.nekohax.modules.Category;
 import lgbt.vaimok.neko.nekohax.modules.Module;
@@ -35,7 +35,7 @@ public class AutoEz extends Module {
     private static final ConcurrentHashMap targeted_players = new ConcurrentHashMap();
 
     @EventHandler
-    private Listener<WurstplusEventPacket.SendPacket> send_listener = new Listener<>(event -> {
+    private Listener<EventPacket.SendPacket> send_listener = new Listener<>(event -> {
 
         if (mc.player == null) return;
 

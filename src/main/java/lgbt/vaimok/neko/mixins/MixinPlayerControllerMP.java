@@ -1,9 +1,9 @@
 package lgbt.vaimok.neko.mixins;
 
 import lgbt.vaimok.neko.nekohax.NekoHax;
-import lgbt.vaimok.neko.nekohax.event.events.WurstplusEventDamageBlock;
-import lgbt.vaimok.neko.nekohax.event.WurstplusEventBus;
-import lgbt.vaimok.neko.nekohax.event.events.WurstplusEventBlock;
+import lgbt.vaimok.neko.nekohax.event.events.EventDamageBlock;
+import lgbt.vaimok.neko.nekohax.event.EventBusTwo;
+import lgbt.vaimok.neko.nekohax.event.events.EventBlock;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.multiplayer.PlayerControllerMP;
 import net.minecraft.entity.player.EntityPlayer;
@@ -29,23 +29,23 @@ public class MixinPlayerControllerMP {
 	@Inject(method = "onPlayerDamageBlock", at = @At("HEAD"), cancellable = true)
 	public void onPlayerDamageBlock(BlockPos posBlock, EnumFacing directionFacing, CallbackInfoReturnable<Boolean> info) {
 
-        WurstplusEventDamageBlock event_packet = new WurstplusEventDamageBlock(posBlock, directionFacing);
+        EventDamageBlock event_packet = new EventDamageBlock(posBlock, directionFacing);
 
-		WurstplusEventBus.EVENT_BUS.post(event_packet);
+		EventBusTwo.EVENT_BUS.post(event_packet);
 
 		if (event_packet.isCancelled()) {
 			info.setReturnValue(false);
 			info.cancel();
 		}
 
-		final WurstplusEventBlock event = new WurstplusEventBlock(4, posBlock, directionFacing);
-		WurstplusEventBus.EVENT_BUS.post(event);
+		final EventBlock event = new EventBlock(4, posBlock, directionFacing);
+		EventBusTwo.EVENT_BUS.post(event);
 	}
 
 	@Inject(method = { "clickBlock" }, at = { @At("HEAD") }, cancellable = true)
 	private void clickBlockHook(final BlockPos pos, final EnumFacing face, final CallbackInfoReturnable<Boolean> info) {
-		final WurstplusEventBlock event = new WurstplusEventBlock(3, pos, face);
-		WurstplusEventBus.EVENT_BUS.post(event);
+		final EventBlock event = new EventBlock(3, pos, face);
+		EventBusTwo.EVENT_BUS.post(event);
 	}
 
 

@@ -1,6 +1,6 @@
 package lgbt.vaimok.neko.nekohax.modules.combat;
 
-import lgbt.vaimok.neko.nekohax.event.events.WurstplusEventRender;
+import lgbt.vaimok.neko.nekohax.event.events.EventRender;
 import lgbt.vaimok.neko.nekohax.guiscreen.settings.Setting;
 import lgbt.vaimok.neko.nekohax.modules.Category;
 import lgbt.vaimok.neko.nekohax.modules.Module;
@@ -97,7 +97,7 @@ public class HoleFill extends Module {
     }
 
     @Override
-    public void render(WurstplusEventRender event) {
+    public void render(EventRender event) {
         if (render.get_value(true) && pos_to_fill != null) {
             if (renderMode.in("Quads")) {
                 RenderHelp.prepare("quads");

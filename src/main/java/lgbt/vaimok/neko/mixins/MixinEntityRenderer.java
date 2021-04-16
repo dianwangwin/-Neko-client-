@@ -1,7 +1,7 @@
 package lgbt.vaimok.neko.mixins;
 
-import lgbt.vaimok.neko.nekohax.event.WurstplusEventBus;
-import lgbt.vaimok.neko.nekohax.event.events.WurstplusEventSetupFog;
+import lgbt.vaimok.neko.nekohax.event.EventBusTwo;
+import lgbt.vaimok.neko.nekohax.event.events.EventSetupFog;
 import net.minecraft.client.renderer.EntityRenderer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -16,8 +16,8 @@ public class MixinEntityRenderer {
     @Inject(method = "setupFog", at = @At("HEAD"), cancellable = true)
     public void setupFog(int startCoords, float partialTicks, CallbackInfo p_Info)
     {
-        WurstplusEventSetupFog event = new WurstplusEventSetupFog(startCoords, partialTicks);
-        WurstplusEventBus.EVENT_BUS.post(event);
+        EventSetupFog event = new EventSetupFog(startCoords, partialTicks);
+        EventBusTwo.EVENT_BUS.post(event);
         
         if (event.isCancelled()) {
 			return;

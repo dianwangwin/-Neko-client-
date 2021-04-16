@@ -1,7 +1,6 @@
 package lgbt.vaimok.neko.nekohax.modules.movement;
 
-import java.util.function.Predicate;
-import lgbt.vaimok.neko.nekohax.event.events.WurstplusEventGUIScreen;
+import lgbt.vaimok.neko.nekohax.event.events.EventGUIScreen;
 import lgbt.vaimok.neko.nekohax.modules.Category;
 import lgbt.vaimok.neko.nekohax.modules.Module;
 import me.zero.alpine.fork.listener.EventHandler;
@@ -15,22 +14,22 @@ public class InventoryMove
 extends Module {
     private static final KeyBinding[] KEYS = new KeyBinding[]{InventoryMove.mc.gameSettings.keyBindForward, InventoryMove.mc.gameSettings.keyBindRight, InventoryMove.mc.gameSettings.keyBindBack, InventoryMove.mc.gameSettings.keyBindLeft, InventoryMove.mc.gameSettings.keyBindJump, InventoryMove.mc.gameSettings.keyBindSprint};
     @EventHandler
-    private final Listener<WurstplusEventGUIScreen> state_gui;
+    private final Listener<EventGUIScreen> state_gui;
 
     public InventoryMove() {
         super(Category.movement);
         this.name = "Inventory Move";
         this.tag = "InventoryMove";
         this.description = "move in guis";
-        this.state_gui = new Listener<WurstplusEventGUIScreen>(wurstplusEventGUIScreen -> {
+        this.state_gui = new Listener<>(event -> {
             if (InventoryMove.mc.player == null && InventoryMove.mc.world == null) {
                 return;
             }
-            if (wurstplusEventGUIScreen.get_guiscreen() instanceof GuiChat || wurstplusEventGUIScreen.get_guiscreen() == null) {
+            if (event.get_guiscreen() instanceof GuiChat || event.get_guiscreen() == null) {
                 return;
             }
             this.walk();
-        }, new Predicate[0]);
+        });
     }
 
     @Override

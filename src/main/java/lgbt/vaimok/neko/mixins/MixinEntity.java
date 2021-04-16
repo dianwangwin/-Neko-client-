@@ -1,7 +1,7 @@
 package lgbt.vaimok.neko.mixins;
 
-import lgbt.vaimok.neko.nekohax.event.events.WurstplusEventEntity;
-import lgbt.vaimok.neko.nekohax.event.WurstplusEventBus;
+import lgbt.vaimok.neko.nekohax.event.events.EventEntity;
+import lgbt.vaimok.neko.nekohax.event.EventBusTwo;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MoverType;
 import org.spongepowered.asm.mixin.Mixin;
@@ -17,9 +17,9 @@ public class MixinEntity {
 	// Inject.
 	@Redirect(method = "applyEntityCollision", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;addVelocity(DDD)V"))
 	public void velocity(Entity entity, double x, double y, double z) {
-		WurstplusEventEntity.WurstplusEventColision event = new WurstplusEventEntity.WurstplusEventColision(entity, x, y, z);
+		EventEntity.EventColision event = new EventEntity.EventColision(entity, x, y, z);
 
-		WurstplusEventBus.EVENT_BUS.post(event);
+		EventBusTwo.EVENT_BUS.post(event);
 
 		if (event.isCancelled()) {
 			return;

@@ -2,9 +2,9 @@ package lgbt.vaimok.neko.nekohax.modules;
 
 import lgbt.vaimok.neko.nekohax.NekoHax;
 import lgbt.vaimok.neko.nekohax.guiscreen.settings.Setting;
-import lgbt.vaimok.neko.nekohax.event.WurstplusEventBus;
-import lgbt.vaimok.neko.nekohax.event.events.WurstplusEventRender;
-import lgbt.vaimok.neko.nekohax.event.events.WurstplusEventRenderEntityModel;
+import lgbt.vaimok.neko.nekohax.event.EventBusTwo;
+import lgbt.vaimok.neko.nekohax.event.events.EventRender;
+import lgbt.vaimok.neko.nekohax.event.events.EventRenderEntityModel;
 import lgbt.vaimok.neko.nekohax.util.MessageUtil;
 import me.zero.alpine.fork.listener.Listenable;
 import net.minecraft.client.Minecraft;
@@ -101,7 +101,7 @@ public class Module implements Listenable {
 
 		disable();
 
-		WurstplusEventBus.EVENT_BUS.unsubscribe(this);
+		EventBusTwo.EVENT_BUS.unsubscribe(this);
 	}
 
 	public void set_enable() {
@@ -109,7 +109,7 @@ public class Module implements Listenable {
 
 		enable();
 
-		WurstplusEventBus.EVENT_BUS.subscribe(this);
+		EventBusTwo.EVENT_BUS.subscribe(this);
 	}
 
 	public void set_active(boolean value) {
@@ -165,7 +165,7 @@ public class Module implements Listenable {
 		return new ArrayList<>(Arrays.asList(item));
 	}
 
-	public void render(WurstplusEventRender event) {
+	public void render(EventRender event) {
 		// 3d
 	}
 
@@ -193,5 +193,5 @@ public class Module implements Listenable {
 		return null;
 	}
 
-	public void on_render_model(final WurstplusEventRenderEntityModel event) {}
+	public void on_render_model(final EventRenderEntityModel event) {}
 }

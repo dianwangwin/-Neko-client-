@@ -2,10 +2,10 @@ package lgbt.vaimok.neko.nekohax.manager;
 
 import lgbt.vaimok.neko.nekohax.turok.draw.RenderHelp;
 import lgbt.vaimok.neko.nekohax.NekoHax;
-import lgbt.vaimok.neko.nekohax.command.WurstplusCommand;
-import lgbt.vaimok.neko.nekohax.command.WurstplusCommands;
-import lgbt.vaimok.neko.nekohax.event.WurstplusEventBus;
-import lgbt.vaimok.neko.nekohax.event.events.WurstplusEventGameOverlay;
+import lgbt.vaimok.neko.nekohax.command.Command;
+import lgbt.vaimok.neko.nekohax.command.Commands;
+import lgbt.vaimok.neko.nekohax.event.EventBusTwo;
+import lgbt.vaimok.neko.nekohax.event.events.EventGameOverlay;
 import lgbt.vaimok.neko.nekohax.util.MessageUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
@@ -22,10 +22,6 @@ import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
-
-// External.
-// Travis.
-
 
 public class EventManager {
 
@@ -63,7 +59,7 @@ public class EventManager {
 			return;
 		}
 
-		WurstplusEventBus.EVENT_BUS.post(new WurstplusEventGameOverlay(event.getPartialTicks(), new ScaledResolution(mc)));
+		EventBusTwo.EVENT_BUS.post(new EventGameOverlay(event.getPartialTicks(), new ScaledResolution(mc)));
 
 		RenderGameOverlayEvent.ElementType target = RenderGameOverlayEvent.ElementType.EXPERIENCE;
 
@@ -111,7 +107,7 @@ public class EventManager {
 
 			mc.ingameGUI.getChatGUI().addToSentMessages(event.getMessage());
 
-			for (WurstplusCommand command : WurstplusCommands.get_pure_command_list()) {
+			for (Command command : Commands.get_pure_command_list()) {
 				try {
 					if (CommandManager.command_list.get_message(event.getMessage())[0].equalsIgnoreCase(command.get_name())) {
 						true_command = command.get_message(CommandManager.command_list.get_message(event.getMessage()));
@@ -129,7 +125,7 @@ public class EventManager {
 
 	@SubscribeEvent
 	public void onInputUpdate(InputUpdateEvent event) {
-		WurstplusEventBus.EVENT_BUS.post(event);
+		EventBusTwo.EVENT_BUS.post(event);
 	}
 
 

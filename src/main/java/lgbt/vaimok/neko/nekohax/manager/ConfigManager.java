@@ -2,8 +2,8 @@ package lgbt.vaimok.neko.nekohax.manager;
 
 import com.google.common.reflect.TypeToken;
 import com.google.gson.*;
-import lgbt.vaimok.neko.nekohax.guiscreen.render.components.WurstplusFrame;
-import lgbt.vaimok.neko.nekohax.guiscreen.render.pinnables.WurstplusPinnable;
+import lgbt.vaimok.neko.nekohax.guiscreen.render.components.Frame;
+import lgbt.vaimok.neko.nekohax.guiscreen.render.pinnables.Pinnable;
 import lgbt.vaimok.neko.nekohax.guiscreen.settings.Setting;
 import lgbt.vaimok.neko.nekohax.NekoHax;
 import lgbt.vaimok.neko.nekohax.modules.Module;
@@ -283,7 +283,7 @@ public class ConfigManager {
         config.add("user", new JsonPrimitive(NekoHax.get_actual_user()));
         config.add("prefix", new JsonPrimitive(CommandManager.get_prefix()));
 
-        for (WurstplusFrame frames_gui : NekoHax.click_gui.get_array_frames()) {
+        for (Frame frames_gui : NekoHax.click_gui.get_array_frames()) {
             JsonObject frame_info = new JsonObject();
 
             frame_info.add("name", new JsonPrimitive(frames_gui.get_name()));
@@ -317,10 +317,10 @@ public class ConfigManager {
 
         CommandManager.set_prefix(json_config.get("prefix").getAsString());
 
-        for (WurstplusFrame frames : NekoHax.click_gui.get_array_frames()) {
+        for (Frame frames : NekoHax.click_gui.get_array_frames()) {
             JsonObject frame_info = json_gui.get(frames.get_tag()).getAsJsonObject();
 
-            WurstplusFrame frame_requested = NekoHax.click_gui.get_frame_with_tag(frame_info.get("tag").getAsString());
+            Frame frame_requested = NekoHax.click_gui.get_frame_with_tag(frame_info.get("tag").getAsString());
 
             frame_requested.set_x(frame_info.get("x").getAsInt());
             frame_requested.set_y(frame_info.get("y").getAsInt());
@@ -345,7 +345,7 @@ public class ConfigManager {
         main_frame.add("x",    new JsonPrimitive(NekoHax.click_hud.get_frame_hud().get_x()));
         main_frame.add("y",    new JsonPrimitive(NekoHax.click_hud.get_frame_hud().get_y()));
 
-        for (WurstplusPinnable pinnables_hud : NekoHax.get_hud_manager().get_array_huds()) {
+        for (Pinnable pinnables_hud : NekoHax.get_hud_manager().get_array_huds()) {
             JsonObject frame_info = new JsonObject();
 
             frame_info.add("title", new JsonPrimitive(pinnables_hud.get_title()));
@@ -385,10 +385,10 @@ public class ConfigManager {
         NekoHax.click_hud.get_frame_hud().set_x(main_frame.get("x").getAsInt());
         NekoHax.click_hud.get_frame_hud().set_y(main_frame.get("y").getAsInt());
 
-        for (WurstplusPinnable pinnables : NekoHax.get_hud_manager().get_array_huds()) {
+        for (Pinnable pinnables : NekoHax.get_hud_manager().get_array_huds()) {
             JsonObject hud_info = main_huds.get(pinnables.get_tag()).getAsJsonObject();
 
-            WurstplusPinnable pinnable_requested = NekoHax.get_hud_manager().get_pinnable_with_tag(hud_info.get("tag").getAsString());
+            Pinnable pinnable_requested = NekoHax.get_hud_manager().get_pinnable_with_tag(hud_info.get("tag").getAsString());
 
             pinnable_requested.set_active(hud_info.get("state").getAsBoolean());
             pinnable_requested.set_dock(hud_info.get("dock").getAsBoolean());

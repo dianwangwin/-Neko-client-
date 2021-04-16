@@ -1,7 +1,7 @@
 package lgbt.vaimok.neko.mixins;
 
-import lgbt.vaimok.neko.nekohax.event.WurstplusEventBus;
-import lgbt.vaimok.neko.nekohax.event.events.WurstplusEventRenderName;
+import lgbt.vaimok.neko.nekohax.event.EventBusTwo;
+import lgbt.vaimok.neko.nekohax.event.events.EventRenderName;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import org.spongepowered.asm.mixin.Mixin;
@@ -15,9 +15,9 @@ public class MixinRenderPlayer {
     @Inject(method = "renderEntityName", at = @At("HEAD"), cancellable = true)
 	public void renderLivingLabel(AbstractClientPlayer entityIn, double x, double y, double z, String name, double distanceSq, CallbackInfo info) {
 
-		WurstplusEventRenderName event_packet = new WurstplusEventRenderName(entityIn, x, y, z, name, distanceSq);
+		EventRenderName event_packet = new EventRenderName(entityIn, x, y, z, name, distanceSq);
 
-        WurstplusEventBus.EVENT_BUS.post(event_packet);
+        EventBusTwo.EVENT_BUS.post(event_packet);
         
         if (event_packet.isCancelled()) {
             info.cancel();

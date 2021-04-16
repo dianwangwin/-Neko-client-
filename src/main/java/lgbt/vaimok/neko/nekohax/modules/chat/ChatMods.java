@@ -2,7 +2,7 @@ package lgbt.vaimok.neko.nekohax.modules.chat;
 
 
 import com.mojang.realmsclient.gui.ChatFormatting;
-import lgbt.vaimok.neko.nekohax.event.events.WurstplusEventPacket;
+import lgbt.vaimok.neko.nekohax.event.events.EventPacket;
 import lgbt.vaimok.neko.nekohax.guiscreen.settings.Setting;
 import lgbt.vaimok.neko.nekohax.modules.Category;
 import lgbt.vaimok.neko.nekohax.modules.Module;
@@ -32,7 +32,7 @@ public final class ChatMods extends Module {
     Setting name_highlight = create("Name Highlight", "ChatModsNameHighlight", true);
 
     @EventHandler
-    private Listener<WurstplusEventPacket.ReceivePacket> PacketEvent = new Listener<>(event -> {
+    private Listener<EventPacket.ReceivePacket> PacketEvent = new Listener<>(event -> {
 
         if (event.get_packet() instanceof SPacketChat) {
 

@@ -1,7 +1,7 @@
 package lgbt.vaimok.neko.nekohax.modules.chat;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
-import lgbt.vaimok.neko.nekohax.event.events.WurstplusEventPacket;
+import lgbt.vaimok.neko.nekohax.event.events.EventPacket;
 import lgbt.vaimok.neko.nekohax.modules.Category;
 import lgbt.vaimok.neko.nekohax.modules.Module;
 import lgbt.vaimok.neko.nekohax.util.FriendUtil;
@@ -35,7 +35,7 @@ public class TotemPopCounter extends Module {
     public static ChatFormatting reset = ChatFormatting.RESET;
 
     @EventHandler
-    private final Listener<WurstplusEventPacket.ReceivePacket> packet_event = new Listener<>(event -> {
+    private final Listener<EventPacket.ReceivePacket> packet_event = new Listener<>(event -> {
 
         if (event.get_packet() instanceof SPacketEntityStatus) {
 
