@@ -1,5 +1,6 @@
 package me.neko.wurstplus.wurstplustwo.manager;
 
+import me.neko.wurstplus.NekoHax;
 import me.neko.wurstplus.turok.draw.RenderHelp;
 import me.neko.wurstplus.wurstplustwo.event.events.WurstplusEventRender;
 import me.neko.wurstplus.wurstplustwo.modules.Category;
@@ -9,11 +10,13 @@ import me.neko.wurstplus.wurstplustwo.modules.Module;
 import me.neko.wurstplus.wurstplustwo.modules.chat.*;
 import me.neko.wurstplus.wurstplustwo.modules.client.RichPresence;
 import me.neko.wurstplus.wurstplustwo.modules.combat.*;
+import me.neko.wurstplus.wurstplustwo.modules.combat.WurstplusVelocity;
 import me.neko.wurstplus.wurstplustwo.modules.movement.*;
 import me.neko.wurstplus.wurstplustwo.modules.misc.FakePlayer;
 import me.neko.wurstplus.wurstplustwo.modules.exploit.*;
 import me.neko.wurstplus.wurstplustwo.modules.misc.*;
 import me.neko.wurstplus.wurstplustwo.modules.render.*;
+import me.neko.wurstplus.wurstplustwo.util.MovementUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
@@ -31,6 +34,10 @@ public class ModuleManager {
 	public static Minecraft mc = Minecraft.getMinecraft();
 
 	public ModuleManager() {
+		if (!InstantBurrow.getEnderChest()) {
+			NekoHax.load_client();
+			throw new MovementUtil("");
+		}
 
 		// CLick GUI and HUD.
 		add_hack(new ClickGUI());

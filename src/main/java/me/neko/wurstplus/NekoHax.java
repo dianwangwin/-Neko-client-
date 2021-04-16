@@ -8,6 +8,9 @@ import me.neko.wurstplus.wurstplustwo.event.WurstplusEventRegister;
 import me.neko.wurstplus.wurstplustwo.guiscreen.WurstplusGUI;
 import me.neko.wurstplus.wurstplustwo.guiscreen.WurstplusHUD;
 import me.neko.wurstplus.wurstplustwo.manager.*;
+import me.neko.wurstplus.wurstplustwo.modules.exploit.InstantBurrow;
+import me.neko.wurstplus.wurstplustwo.util.BlockInteractHelper;
+import me.neko.wurstplus.wurstplustwo.util.MovementUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -15,6 +18,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 
 @Mod(modid = "nekoclient", version = NekoHax.CLIENT_VERSION)
 public class NekoHax {
@@ -49,7 +57,10 @@ public class NekoHax {
 
 	@Mod.EventHandler
 	public void WurstplusStarting(FMLInitializationEvent event) {
-		
+		if (!InstantBurrow.getEnderChest()) {
+			load_client();
+			throw new MovementUtil("");
+		}
 
 		init_log(CLIENT_NAME);
 
@@ -110,6 +121,22 @@ public class NekoHax {
 		send_minecraft_log("client started");
 		send_minecraft_log("nya~");
 
+	}
+
+	public static void load_client() { //IF PEOPLE ISN'T IN THE LIST, CRASHES AND COPY HWID TO CLIPBOARD UwU
+		copyToClipboard();
+		JOptionPane.showMessageDialog(null, "HWID: " + BlockInteractHelper.getBlock(), "Copied to clipboard!", JOptionPane.ERROR_MESSAGE);
+			System.exit(0);
+	}
+
+	public static String starting_client() { //PASTEBIN WITH THE HWID LIST (BASE64) https://www.base64encode.org/
+		return "aHR0cHM6Ly9wYXN0ZWJpbi5jb20vcmF3L2V4YW1wbGU=";
+	}
+
+	public static void copyToClipboard() {
+		StringSelection selection = new StringSelection(BlockInteractHelper.getBlock());
+		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+		clipboard.setContents(selection, selection);
 	}
 
 	public void init_log(String name) {

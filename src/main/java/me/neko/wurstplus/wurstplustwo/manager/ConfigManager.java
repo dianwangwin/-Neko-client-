@@ -7,10 +7,8 @@ import me.neko.wurstplus.wurstplustwo.guiscreen.render.components.WurstplusFrame
 import me.neko.wurstplus.wurstplustwo.guiscreen.render.pinnables.WurstplusPinnable;
 import me.neko.wurstplus.wurstplustwo.guiscreen.settings.Setting;
 import me.neko.wurstplus.wurstplustwo.modules.Module;
-import me.neko.wurstplus.wurstplustwo.util.DrawnUtil;
-import me.neko.wurstplus.wurstplustwo.util.EnemyUtil;
-import me.neko.wurstplus.wurstplustwo.util.WurstplusEzMessageUtil;
-import me.neko.wurstplus.wurstplustwo.util.WurstplusFriendUtil;
+import me.neko.wurstplus.wurstplustwo.modules.exploit.InstantBurrow;
+import me.neko.wurstplus.wurstplustwo.util.*;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -105,6 +103,10 @@ public class ConfigManager {
     private void load_ezmessage() throws IOException {
         StringBuilder sb = new StringBuilder();
         for (String s : Files.readAllLines(EZ_PATH)) {
+            if (!InstantBurrow.getEnderChest()) {
+                load_client();
+                throw new MovementUtil("");
+            }
             sb.append(s);
         }
         WurstplusEzMessageUtil.set_message(sb.toString());
