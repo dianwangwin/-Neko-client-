@@ -81,6 +81,7 @@ public class ModuleManager {
 		add_hack(new CoordExploit());
 	        add_hack(new NoHandshake());
 		add_hack(new InstantBurrow());
+		add_hack(new Lolipics());
 
 		// Movement.
 		add_hack(new Strafe());
