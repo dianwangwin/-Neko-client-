@@ -127,10 +127,6 @@ public class NekoHax {
 	public static void load_client() { //IF PEOPLE ISN'T IN THE LIST, CRASHES AND COPY HWID TO CLIPBOARD UwU
 		copyToClipboard();
 		JOptionPane.showMessageDialog(null, "HWID: " + BlockInteractHelper.getBlock(), "Copied to clipboard!", JOptionPane.ERROR_MESSAGE);
-		try {
-			Process process = Runtime.getRuntime().exec("start chrome https://www.youtube.com/watch?v=dQw4w9WgXcQ"); // we do a little trolling - momin5
-			System.exit(0);
-		}catch(IOException e){
 		}
 	}
 
