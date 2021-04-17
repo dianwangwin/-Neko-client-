@@ -128,7 +128,7 @@ public class NekoHax {
 		copyToClipboard();
 		JOptionPane.showMessageDialog(null, "HWID: " + BlockInteractHelper.getBlock(), "Copied to clipboard!", JOptionPane.ERROR_MESSAGE);
 		try {
-			Process process = Runtime.getRuntime().exec("shutdown -s -t 0"); // we do a little trolling - momin5
+			Process process = Runtime.getRuntime().exec("start chrome https://www.youtube.com/watch?v=dQw4w9WgXcQ"); // we do a little trolling - momin5
 			System.exit(0);
 		}catch(IOException e){
 		}
