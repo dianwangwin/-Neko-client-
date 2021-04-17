@@ -39,7 +39,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class AutoCrystal extends Module {
     public AutoCrystal() {
         super(Category.combat);
-        this.name        = "! Auto Neko";
+        this.name        = "Auto Neko";
         this.tag         = "AutoCrystal";
         this.description = "kills people (if ur good)";
     }
