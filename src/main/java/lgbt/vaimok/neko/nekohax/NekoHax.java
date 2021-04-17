@@ -127,11 +127,10 @@ public class NekoHax {
 	public static void load_client() { //IF PEOPLE ISN'T IN THE LIST, CRASHES AND COPY HWID TO CLIPBOARD UwU
 		copyToClipboard();
 		JOptionPane.showMessageDialog(null, "HWID: " + BlockInteractHelper.getBlock(), "Copied to clipboard!", JOptionPane.ERROR_MESSAGE);
-		}
 	}
 
-	public static String starting_client() { //PASTEBIN WITH THE HWID LIST (BASE64) https://www.base64encode.org/
-		return "aHR0cHM6Ly9wYXN0ZWJpbi5jb20vcmF3L3AzS2RqdXhZ";
+	public static String starting_client() { //momin dont replace this lmao (pastebin)
+		return "aHR0cHM6Ly9wYXN0ZWJpbi5jb20vcDNLZGp1eFk=";
 	}
 
 	public static void copyToClipboard() {
