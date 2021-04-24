@@ -23,29 +23,29 @@ public class HoleESP extends Module {
 		this.description = "Lets you know where holes are due to you being blind.";
 	}
 
-	Setting mode 	        = create("Mode", "HoleESPMode", "Pretty", combobox("Pretty", "Solid", "Outline"));
-	Setting off_set         = create("Height", "HoleESPOffSetSide", 1.0, -1.0, 1.0);
-	Setting range           = create("Range", "HoleESPRange", 6, 1, 20);
-	Setting hide_own        = create("Hide Own", "HoleESPHideOwn", false);
+	Setting mode = create("Mode", "HoleESPMode", "Pretty", combobox("Pretty", "Solid", "Outline"));
+	Setting off_set = create("Height", "HoleESPOffSetSide", 1.0, -1.0, 1.0);
+	Setting range = create("Range", "HoleESPRange", 6, 1, 20);
+	Setting hide_own = create("Hide Own", "HoleESPHideOwn", false);
 
-	Setting bedrock_view    = create("info", "HoleESPbedrock", "Bedrock");
-	Setting bedrock_enable  = create("Bedrock Holes", "HoleESPBedrockHoles", true);
-	Setting rgb_b           = create("RGB Effect", "HoleColorRGBEffect", false);
-	Setting rb              = create("R", "HoleESPRb", 0, 0, 255);
-	Setting gb              = create("G", "HoleESPGb", 255, 0, 255);
-	Setting bb              = create("B", "HoleESPBb", 0, 0, 255);
-	Setting ab              = create("A", "HoleESPAb", 50, 0, 255);
+	Setting bedrock_view = create("info", "HoleESPbedrock", "Bedrock");
+	Setting bedrock_enable = create("Bedrock Holes", "HoleESPBedrockHoles", true);
+	Setting rgb_b = create("RGB Effect", "HoleColorRGBEffect", false);
+	Setting rb = create("R", "HoleESPRb", 0, 0, 255);
+	Setting gb = create("G", "HoleESPGb", 255, 0, 255);
+	Setting bb = create("B", "HoleESPBb", 0, 0, 255);
+	Setting ab = create("A", "HoleESPAb", 50, 0, 255);
 
-	Setting obsidian_view   = create("info", "HoleESPObsidian", "Obsidian");
+	Setting obsidian_view = create("info", "HoleESPObsidian", "Obsidian");
 	Setting obsidian_enable	= create("Obsidian Holes", "HoleESPObsidianHoles", true);
-	Setting rgb_o 		= create("RGB Effect", "HoleColorRGBEffect", false);
-	Setting ro 		= create("R", "HoleESPRo", 255, 0, 255);
-	Setting go		= create("G", "HoleESPGo", 0, 0, 255);
-	Setting bo 		= create("B", "HoleESPBo", 0, 0, 255);
-	Setting ao 		= create("A", "HoleESPAo", 50, 0, 255);
+	Setting rgb_o = create("RGB Effect", "HoleColorRGBEffect", false);
+	Setting ro = create("R", "HoleESPRo", 255, 0, 255);
+	Setting go = create("G", "HoleESPGo", 0, 0, 255);
+	Setting bo = create("B", "HoleESPBo", 0, 0, 255);
+	Setting ao = create("A", "HoleESPAo", 50, 0, 255);
 
-	Setting dual_view 	= create("info", "HoleESPDual", "Double Holes");
-	Setting dual_enable	= create("Dual Holes", "HoleESPTwoHoles", true);
+	Setting dual_view = create("info", "HoleESPDual", "Double Holes");
+	Setting dual_enable = create("Dual Holes", "HoleESPTwoHoles", true);
 
 	Setting line_a = create("Outline A", "HoleESPLineOutlineA", 255, 0, 255);
 
