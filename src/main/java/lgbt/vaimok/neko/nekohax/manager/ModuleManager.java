@@ -116,6 +116,7 @@ public class ModuleManager {
 		add_hack(new FastUtil());
 		add_hack(new Speedmine());
 		add_hack(new RichPresence());
+                add_hack(new MiddleClickXp());
 		
 
 		// Dev
