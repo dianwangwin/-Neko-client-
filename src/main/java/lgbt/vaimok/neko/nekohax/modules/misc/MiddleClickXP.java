@@ -7,13 +7,15 @@ import net.minecraft.init.Items;
 import net.minecraft.util.EnumHand;
 import org.lwjgl.input.Mouse;
 
-public MiddleClickXP() {
+public class MiddleClickXP extends Module {
+    
+    public MiddleClickXP() {
         super(Category.misc);
 
-        this.name        = "MiddleclickXP";
-        this.tag         = "MiddleclickXP";
-        this.description = "xp go brrrrrr";
-}
+		this.name        = "MiddleClickXP";
+		this.tag         = "MiddleClickXP";
+		this.description = "xp go brrrrrr";
+    }
 
     public void update() {
         if (mc.player != null && mc.world != null) {
