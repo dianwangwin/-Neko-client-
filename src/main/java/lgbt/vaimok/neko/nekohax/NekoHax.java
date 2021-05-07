@@ -32,7 +32,7 @@ public class NekoHax {
 	private static NekoHax MASTER;
 
 	public static final String CLIENT_NAME = "Neko Client";
-	public static final String CLIENT_VERSION = "0.9-beta";
+	public static final String CLIENT_VERSION = "1.69";
 	public static final String CLIENT_SIGN = " ";
 
 	public static final int CLIENT_KEY_GUI = Keyboard.KEY_RSHIFT;
