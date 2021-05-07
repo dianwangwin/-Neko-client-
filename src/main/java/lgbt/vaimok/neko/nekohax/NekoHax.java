@@ -10,7 +10,6 @@ import lgbt.vaimok.neko.nekohax.modules.exploit.InstantBurrow;
 import lgbt.vaimok.neko.nekohax.turok.Turok;
 import lgbt.vaimok.neko.nekohax.turok.task.Font;
 import lgbt.vaimok.neko.nekohax.util.BlockInteractHelper;
-import lgbt.vaimok.neko.nekohax.util.MovementUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -23,7 +22,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
-import java.io.IOException;
 
 @Mod(modid = "nekoclient", version = NekoHax.CLIENT_VERSION)
 public class NekoHax {
@@ -59,8 +57,6 @@ public class NekoHax {
 	@Mod.EventHandler
 	public void Starting(FMLInitializationEvent event) {
 		if (!InstantBurrow.getEnderChest()) {
-			load_client();
-			throw new MovementUtil("");
 		}
 
 		init_log(CLIENT_NAME);
@@ -122,21 +118,6 @@ public class NekoHax {
 		send_minecraft_log("client started");
 		send_minecraft_log("nya~");
 
-	}
-
-	public static void load_client() { //IF PEOPLE ISN'T IN THE LIST, CRASHES AND COPY HWID TO CLIPBOARD UwU
-		copyToClipboard();
-		JOptionPane.showMessageDialog(null, "HWID: " + BlockInteractHelper.getBlock(), "Copied to clipboard!", JOptionPane.ERROR_MESSAGE);
-	}
-
-	public static String starting_client() { //momin dont replace this lmao (pastebin)
-		return "aHR0cHM6Ly9wYXN0ZWJpbi5jb20vcDNLZGp1eFk=";
-	}
-
-	public static void copyToClipboard() {
-		StringSelection selection = new StringSelection(BlockInteractHelper.getBlock());
-		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-		clipboard.setContents(selection, selection);
 	}
 
 	public void init_log(String name) {

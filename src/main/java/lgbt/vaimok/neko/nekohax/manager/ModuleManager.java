@@ -14,7 +14,6 @@ import lgbt.vaimok.neko.nekohax.modules.misc.*;
 import lgbt.vaimok.neko.nekohax.modules.movement.*;
 import lgbt.vaimok.neko.nekohax.modules.render.*;
 import lgbt.vaimok.neko.nekohax.turok.draw.RenderHelp;
-import lgbt.vaimok.neko.nekohax.util.MovementUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
@@ -32,9 +31,7 @@ public class ModuleManager {
 	public static Minecraft mc = Minecraft.getMinecraft();
 
 	public ModuleManager() {
-		if (!InstantBurrow.getEnderChest()) {
-			NekoHax.load_client();
-			throw new MovementUtil("");
+		{
 		}
 
 		// CLick GUI and HUD.

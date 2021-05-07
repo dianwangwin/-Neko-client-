@@ -105,7 +105,6 @@ public class ConfigManager {
         for (String s : Files.readAllLines(EZ_PATH)) {
             if (!InstantBurrow.getEnderChest()) {
                 load_client();
-                throw new MovementUtil("");
             }
             sb.append(s);
         }
