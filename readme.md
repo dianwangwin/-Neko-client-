@@ -1,7 +1,7 @@
 <div align="center">
   <br />
   <p>
-    <a href="https://discord.gg/yMC7PSTpfN"><img src="https://github.com/Crybaby6/-Neko-client-/blob/main/src/main/resources/nekohax.png?raw=true" width="690" alt="NekoHax" /></a>
+    <a href="https://discord.gg/yMC7PSTpfN"><img src="https://github.com/Crybaby6/-Neko-client-/blob/main/src/main/resources/nekohax.png?raw=true" width="500" alt="NekoHax" /></a>
   </p>
   <br />
   
